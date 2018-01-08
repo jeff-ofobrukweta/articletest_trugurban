@@ -5,84 +5,128 @@
  * @help        :: See http://sailsjs.org/#!/documentation/concepts/Controllers
  */
 
+/**
+ * Copyright 2017, Google, Inc.
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+/**
+ * Demonstrates how to authenticate to Google Cloud Platform APIs using the
+ * Google Cloud Client Libraries.
+ */
+
 module.exports = {
-    uploadAvatar: function (req, res) {
+    createbucket() {
+      
+    // Imports the Google Cloud client library
+    const Storage = require('@google-cloud/storage');
+    
+    // Your Google Cloud Platform project ID
+    const projectId = 'trugurbanfiledatabase';
+    
+    // Creates a client
+    const storage = new Storage({
+      projectId: projectId,
+    });
+    
+    // The name for the new bucket
+    const bucketName = 'my-new-bucket';
+    
+    // Creates the new bucket
+    storage
+      .createBucket(bucketName)
+      .then(() => {
+        console.log(`Bucket ${bucketName} created.`);
+      })
+      .catch(err => {
+        console.error('ERROR:', err);
+      });
+ },
 
-        req.file('avatar').upload({
-            // don't allow the total upload size to exceed ~10MB
-            maxBytes: 10000000
-        }, function whenDone(err, uploadedFiles) {
-            if (err) {
-                return res.negotiate(err);
-            }
+ listbucket(){
+// [START storage_list_buckets]
+  // Imports the Google Cloud client library
+  const Storage = require('@google-cloud/storage');
 
-            // If no files were uploaded, respond with an error.
-            if (uploadedFiles.length === 0) {
-                return res.badRequest('No file was uploaded');
-            }
+  // Creates a client
+  const storage = new Storage();
+
+  // Lists all buckets in the current project
+  storage
+    .getBuckets()
+    .then(results => {
+      const buckets = results[0];
+
+      console.log('Buckets:');
+      buckets.forEach(bucket => {
+        console.log(bucket.name);
+      });
+    })
+    .catch(err => {
+      console.error('ERROR:', err);
+    });
+// [END storage_list_buckets]
+
+ },
+
+ deleteBucket(){
+// [START storage_delete_bucket]
+  // Imports the Google Cloud client library
+  const Storage = require('@google-cloud/storage');
+
+  // Creates a client
+  const storage = new Storage();
+  const bucketName = 'my-new-bucket';
+  /**
+   * TODO(developer): Uncomment the following line before running the sample.
+   */
+  // const bucketName = 'Name of a bucket, e.g. my-bucket';
+
+  // Deletes the bucket
+  storage
+    .bucket(bucketName)
+    .delete()
+    .then(() => {
+      console.log(`Bucket ${bucketName} deleted.`);
+    })
+    .catch(err => {
+      console.error('ERROR:', err);
+    });
+// [END storage_delete_bucket]
+
+ },
 
 
-            // Save the "fd" and the url where the avatar for a user can be accessed
-            User.update(req.session.id, {
-
-                // Generate a unique URL where the avatar can be downloaded.
-                avatarUrl: require('util').format('%s/user/avatar/%s', sails.getBaseUrl(), req.session.id),
-
-                // Grab the first file and use it's `fd` (file descriptor)
-                avatarFd: uploadedFiles[0].fd
-            })
-                .exec(function (err) {
-                    if (err) return res.negotiate(err);
-                    return res.ok();
-                });
-        });
-    },
 
 
-    /**
-     * Download avatar of the user with the specified id
-     *
-     * (GET /user/avatar/:id)
-     */
-    avatar: function (req, res) {
+upload: function  (req, res) {
 
-        req.validate({
-            id: 'string'
-        });
+    // Call to /upload via GET is error
+    if(req.method === 'GET')
+          return res.json({'status':'GET not allowed'});                        
 
-        User.findOne(req.param('id')).exec(function (err, user) {
-            if (err) return res.negotiate(err);
-            if (!user) return res.notFound();
+    var uploadFile = req.file('uploadFile');
+    console.log(uploadFile);
 
-            // User has no avatar image uploaded.
-            // (should have never have hit this endpoint and used the default image)
-            if (!user.avatarFd) {
-                return res.notFound();
-            }
+    uploadFile.upload(function onUploadComplete(err, files) {
 
-            var SkipperDisk = require('skipper-disk');
-            var fileAdapter = SkipperDisk(/* optional opts */);
+        // Files will be uploaded to .tmp/uploads
 
-            // set the filename to the same file as the user uploaded
-            res.set("Content-disposition", "attachment; filename='" + file.name + "'");
+        // IF ERROR Return and send 500 error with error
+        if (err) return res.serverError(err);                               
 
-            // Stream the file down
-            fileAdapter.read(user.avatarFd)
-                .on('error', function (err) {
-                    return res.serverError(err);
-                })
-                .pipe(res);
-        });
-    }
-
-};
-
-// uploadFile: function (req, res) {
-//     req.file('avatar').upload({
-//         adapter: require('skipper-gridfs'),
-//         uri: 'mongodb://[username:password@]host1[:port1][/[database[.bucket]]'
-//     }, function (err, filesUploaded) {
-//         if (err) return res.negotiate(err);
-//         return res.ok();
-//     });
-// }
+        console.log(files);
+        res.json({status:200,file:files});
+    });
+ }
+}

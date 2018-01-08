@@ -52,7 +52,7 @@ module.exports.routes = {
       origin: 'http://foobar.com,https://owlhoot.com'
     }
   },
-  'GET /api/v1/auth/facebook': {
+  'POST /api/v1/auth/facebook': {
     controller: 'AuthControllerControllerController',
     action: 'facebookAuth'
   },
@@ -60,7 +60,7 @@ module.exports.routes = {
     controller: 'AuthControllerControllerController',
     action: 'facebookCallback'
   },
-  'GET /authenticate': {
+  'POST /authenticate': {
     controller: 'AuthControllerControllerController', 
     action: 'authenticate'
   },
@@ -68,10 +68,21 @@ module.exports.routes = {
     controller: 'AuthControllerControllerController',
     action: 'authenticate'
   },
-  'POST /file_upload': {
+  'GET /listFiles': {
     controller: 'Upload_contentController',
-    action: 'uploadAvatar'
+    action: 'listbucket'
   },
+  'GET /All': {
+    controller: 'UserController',
+    action: 'All'
+  },
+  'POST /forgot_password': {
+    controller: 'NodemailerController',
+    action: 'forgot_password'
+  },
+  
+// this section is the route configuration for updating the information on the application via the api
+  
 
   /***************************************************************************
   *                                                                          *

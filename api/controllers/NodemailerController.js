@@ -14,6 +14,11 @@ module.exports = {
         const nodemailer = require('nodemailer');
         // require the link from the after create in the /model/user.js
         const collectLinkforusertoclick = require('../models/User.js');
+
+        const useremail = req.body.useremail;
+        const download_url = req.body.download_url;
+
+        console.log('useremail',useremail)
         // the next step is to get the link from the above required js  
         console.log(collectLinkforusertoclick.afterCreate);
         // Generate test SMTP service account from ethereal.email
@@ -31,11 +36,11 @@ module.exports = {
 
             // setup email data with unicode symbols
             let mailOptions = {
-                from: '"JEFF OFOBRUKWETA 👻" <chownow@chownow.com>', // sender address
-                to: `oghenerukevwejeff@gmail.com, oghenerukevwejeff@gmail.com`, // list of receivers
+                from: '"JEFF OFOBRUKWETA 👻" <norepley@truggurban.com>', // sender address
+                to: useremail, // list of receivers
                 subject: 'RESSET PASSWORD FOR CHOWNOW ✔', // Subject line
                 text: 'resset your password', // plain text body
-                html: '<b>Hello world?</b><div>my world</div>'// html body
+                html: '<b>thanks new for patronage?</b><div>there is the link to the material</div>'+download_url+" "+'<b>click on this link?</b><div>thanks alot</div>'// html body
             };
 
             // send mail with defined transport object
