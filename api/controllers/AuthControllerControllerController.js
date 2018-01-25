@@ -25,15 +25,16 @@ module.exports = {
                     user: user
                 });
             });
+            // console.log("this is the req.session part"+JSON.stringify(req.session.passport,null,2));
 
         })(req, res);
     },
 
+
     logout: function (req, res) {
-        req.logout();
-        res.send('you have been sucessfully signed out');
-        console.log(req.session);
-        console.log(`this is the logout  action`)
+        delete req.logout();
+        delete req.session;
+        res.json({sucess:true});
     },
     // Here is were we specify our facebook strategy.
     // https://developers.facebook.com/docs/
@@ -41,16 +42,30 @@ module.exports = {
 
     facebookAuth: function (req, res, next) {
         passport.authenticate('facebook', { scope: ['email'] })(req, res, next);
+        //console.log(res)
     },
 
     facebookCallback: function (req, res, next) {
         passport.authenticate('facebook', function (err, user) {
-            res.json(user);
+           res.json(user);
         })(req, res, next);
     },
+    // https://developers.google.com/
+    // https://developers.google.com/accounts/docs/OAuth2Login#scope-param
 
     authenticate: function (req, res) {
-        passport.authenticate('google', { scope: ['https://www.googleapis.com/auth/userinfo.profile'] })(req, res);
+        passport.authenticate('google', { failureRedirect: '/login', scope: ['https://www.googleapis.com/auth/plus.login', 'https://www.googleapis.com/auth/plus.profile.emails.read'] }, function (err, user) {
+            req.logIn(user, function (err) {
+                if (err) {
+                    console.log(err);
+                    res.view('500');
+                    return;
+                }
+                console.log(user)
+                res.redirect('/');
+                return;
+            });
+        })(req, res);
     },
 
     authcallback: function (req, res) {

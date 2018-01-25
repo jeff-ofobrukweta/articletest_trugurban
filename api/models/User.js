@@ -4,26 +4,17 @@
  * @description :: TODO: You might write a short summary of how this model works and what it represents here.
  * @docs        :: http://sailsjs.org/documentation/concepts/models-and-orm/models
  */
-
-// module.exports = {
-
-//   attributes: {
-
-//     login : { type: 'string' },
-
-//     logout : { type: 'string' },
-
-//     signup : { type: 'string' }
-//   }
-// };
-
 var bcryptjs = require('bcryptjs');
+//var _= require('lodash');
+// var _super= require('sails-permissions/api/models/User');
+//var usermail = require('usermail');
 module.exports = {
   schema: true,
   attributes: {
     firstname: {
       type: 'string',
-      required: true
+      required: true,
+      unique: true
     },
     secondname: {
       type: 'string',
@@ -33,11 +24,24 @@ module.exports = {
       type: 'string',
       required: true,
       minLength: 11,
+      unique: true
     },
     email: {
       type: 'string',
       required: true,
       unique: true
+    },
+    delivery_address: {
+      type: 'string',
+      required: true
+    },
+    sex: {
+      type: 'string',
+      required: true
+    },
+    language: {
+      type: 'array',
+      required: true
     },
     password: {
       type: 'string',
@@ -46,10 +50,8 @@ module.exports = {
       unique: true
     },
     email_validated: {
-      email: true,
       type: 'boolean',
-      required: true,
-      defaultsTo: false
+      required: false
     },
     validation_token: {
       type: 'string',
@@ -58,7 +60,7 @@ module.exports = {
     },
     toJSON: function () {
       var obj = this.toObject();
-      delete obj.password;
+      // delete obj.password;
       return obj;
     }
   },
@@ -68,7 +70,7 @@ module.exports = {
     if (values.password && this.user && this.user.id) {
       Passport.update({ user: values.id, protocol: 'local' }, { password: values.password })
         .exec(function (err, passport) {
-          delete values.password;
+          // delete values.password;
           console.log(`the password is being updated by password here`);
           next(err);
         });
@@ -85,6 +87,7 @@ module.exports = {
           cb(err);
         } else {
           user.password = hash;
+          console.log(hash)
           cb();
         }
       });
@@ -92,22 +95,24 @@ module.exports = {
   },
 
   //Before update,if a token was passed in,Create a new one
-  beforeUpdate: function (values, next) {
-    if (values.new_token) {
-      values.validation_token = bcryptjs.hashSync(String(new Date().getTime()));
-      console.log('New validation Token');
-      console.log(values.validation_token);
-      delete values.new_token;
-    }
+  afternewupdate: function (values, next) {
+    // if (values.) {
+    //   values.validation_token = bcryptjs.hashSync(String(new Date().getTime()));
+    //   console.log('New validation Token');
+    //   console.log(values.validation_token);
+    //   delete values.new_token;
+    // }
+    console.log('after update functionality')
     next();
   },
+
   afterCreate: function (user, next) {
     //Email the user the validation link after creation
     if (user.email != "admin@example.com") {
       // usermail(user,{
       user_validation_token = bcryptjs.hashSync(String(new Date().getTime()));
       // console.log(String(new Date().getTime()))
-      console.log(sails.getBaseUrl() + "/user/" + user.id + "&validation_id" + "/validate-email?email=" + user.email + "&validation_token=" + user_validation_token)
+      var collect = sails.getBaseUrl() + "/user/" + user.id + "&validation_id" + "/validate-email?email=" + user.email + "&validation_token=" + user_validation_token;
       // subject:"Validate Email on "+sails.config.appName,
       // template:'validate_email'
       // });
@@ -116,8 +121,4 @@ module.exports = {
   }
 
 };
-
-
-
-
 

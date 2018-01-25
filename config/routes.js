@@ -33,10 +33,10 @@ module.exports.routes = {
   ***************************************************************************/
 
   '/': {
-    view: 'homepage',
-    cors: {
-      origin: '*'
-    }
+    view: 'homepage'
+  },
+  '/update': {
+    view: 'changepassword'
   },
   'POST /create': {
     controller: 'UserController',
@@ -45,14 +45,25 @@ module.exports.routes = {
       origin: 'http://foobar.com,https://owlhoot.com'
     }
   },
-  'DELETE /destroyUser': {
+  'GET /logout': {
+    controller: 'AuthControllerControllerController',
+    action: 'logout',
+    cors: {
+      origin: 'http://foobar.com,https://owlhoot.com'
+    }
+  },
+  'POST /login': {
+    controller: 'AuthControllerControllerController',
+    action: 'login'
+  },
+  'DELETE /destroyUser/:id': {
     controller: 'UserController',
     action: 'destroyUser',
     cors: {
       origin: 'http://foobar.com,https://owlhoot.com'
     }
   },
-  'GET /api/v1/auth/facebook': {
+  'POST /api/v1/auth/facebook': {
     controller: 'AuthControllerControllerController',
     action: 'facebookAuth'
   },
@@ -60,19 +71,80 @@ module.exports.routes = {
     controller: 'AuthControllerControllerController',
     action: 'facebookCallback'
   },
-  'GET /authenticate': {
+  'POST /authenticate': {
     controller: 'AuthControllerControllerController', 
     action: 'authenticate'
   },
-  'GET /authenticate': {
+  'GET /authcallback': {
     controller: 'AuthControllerControllerController',
-    action: 'authenticate'
+    action: 'authcallback'
   },
-  'POST /file_upload': {
+  'POST /forgotpassword': {
+    controller: 'UserController',
+    action: 'forgotpassword'
+  },
+  'POST /updateUserwithname': {
+    controller: 'UserController',
+    action: 'updateUserwithname'
+  },
+  'GET /all': {
+    controller: 'UserController',
+    action: 'All'
+  },
+  'GET /nodemailer': {
+    controller: 'NodemailerController',
+    action: 'forgot_password'
+  },
+  'GET /reset': {
+    controller: 'UserController',
+    action: 'view'
+  },
+  'GET /reset': {
+    controller: 'UserController',
+    action: 'view'
+  },
+  'POST /findcategory': {
+    controller: 'NaterialschemaController',
+    action: 'findcategory'
+  },
+  'GET /french': {
+    controller: 'NaterialschemaController',
+    action: 'french'
+  },
+  'POST /upload_content': {
     controller: 'Upload_contentController',
-    action: 'uploadAvatar'
+    action: 'upload_content'
   },
-
+  'POST /upload_video': {
+    controller: 'Upload_contentController',
+    action: 'upload_video'
+  },
+  'GET /showallvideos': {
+   controller: 'Upload_contentController',
+    action: 'showallvideos'
+  },
+  'POST /Videoscreate': {
+    controller: 'NaterialschemaController',
+    action: 'Videoscreate',
+    cors: {
+      origin: 'http://foobar.com,https://owlhoot.com'
+    }
+  },
+    'POST /findonethroughEmail': {
+      controller: 'UserController',
+      action: 'findonethroughEmail',
+      cors: {
+        origin: 'http://foobar.com,https://owlhoot.com'
+      }
+    },
+    'GET /Allvideos': {
+        controller: 'NaterialschemaController',
+        action: 'Allvideos',
+        cors: {
+          origin: 'http://foobar.com,https://owlhoot.com'
+        }
+  }
+  
   /***************************************************************************
   *                                                                          *
   * Custom routes here...                                                    *

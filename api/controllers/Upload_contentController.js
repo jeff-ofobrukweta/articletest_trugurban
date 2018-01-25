@@ -42,7 +42,7 @@ module.exports = {
     /**
      * Download avatar of the user with the specified id
      *
-     * (GET /user/avatar/:id)
+    //  * (GET /user/avatar/:id)
      */
     avatar: function (req, res) {
 
@@ -73,8 +73,141 @@ module.exports = {
                 })
                 .pipe(res);
         });
-    }
+    },
+    upload_content(req, res) {
+        req.file('avatar').upload((err, uploadedFiles) => {
+            if (err) {
+                return res.negotiate(err);
+            }
 
+            // If no files were uploaded, respond with an error.
+            if (uploadedFiles.length === 0) {
+
+                return res.badRequest('No file was uploaded');
+            }
+
+            console.log(uploadedFiles.fd);
+
+            const fileDesc = uploadedFiles[0].fd;
+            res.json(fileDesc)
+            var cloudinary = require('cloudinary');
+
+            cloudinary.config({
+                cloud_name: 'troggeurban',
+                api_key: '193435699531835',
+                api_secret: '5I5ZKM1lZ_qO18mRWjYUGTtAwaw'
+            });
+            req.file('image').upload(function (err, uploadedFiles) {
+                if (err) {
+                    return res.send(500, err);
+                } else {
+                    cloudinary.uploader.upload(fileDesc, function (result) {
+                        console.log("hello " + fileDesc)
+                        // Images.update(req.param('id'), { imagePath: result.url }, function imageUpdated(err) {
+                        //     if (err) {
+                        //         console.log(err);
+                        //         return res.redirect('/');
+                        //     }
+                        //     // res.redirect('/image/upload/' + req.param('id'))
+                        //     console.log('hopefully uve sent the image')
+                        // });
+                    });
+                }
+            });
+
+        });
+    },
+    upload_video(req, res) {
+        req.file('video').upload((err, uploadedFiles) => {
+            if (err) {
+                return res.negotiate(err);
+            }
+
+            // If no files were uploaded, respond with an error.
+            if (uploadedFiles.length === 0) {
+
+                return res.badRequest('No file was uploaded');
+            }
+
+            console.log(uploadedFiles.fd);
+
+            const fileDesc = uploadedFiles[0].fd;
+            res.json(fileDesc)
+            var cloudinary = require('cloudinary');
+
+            cloudinary.config({
+                cloud_name: 'troggeurban',
+                api_key: '193435699531835',
+                api_secret: '5I5ZKM1lZ_qO18mRWjYUGTtAwaw'
+            });
+            req.file('video').upload(function (err, uploadedFiles) {
+                if (err) {
+                    return res.send(500, err);
+                } else {
+                    cloudinary.v2.uploader.upload(fileDesc,
+                        { resource_type: "video", prefix: 'intermediate/' },
+                        function (result) { console.log(result); });
+                }
+            });
+
+        });
+    },
+    upload_content(req, res) {
+        req.file('avatar').upload((err, uploadedFiles) => {
+            if (err) {
+                return res.negotiate(err);
+            }
+
+            // If no files were uploaded, respond with an error.
+            if (uploadedFiles.length === 0) {
+
+                return res.badRequest('No file was uploaded');
+            }
+
+            console.log(uploadedFiles.fd);
+
+            const fileDesc = uploadedFiles[0].fd;
+            res.json(fileDesc)
+            var cloudinary = require('cloudinary');
+
+            cloudinary.config({
+                cloud_name: 'troggeurban',
+                api_key: '193435699531835',
+                api_secret: '5I5ZKM1lZ_qO18mRWjYUGTtAwaw'
+            });
+            req.file('image').upload(function (err, uploadedFiles) {
+                if (err) {
+                    return res.send(500, err);
+                } else {
+                    cloudinary.uploader.upload(fileDesc, function (result) {
+                        console.log("hello " + fileDesc)
+                        // Images.update(req.param('id'), { imagePath: result.url }, function imageUpdated(err) {
+                        //     if (err) {
+                        //         console.log(err);
+                        //         return res.redirect('/');
+                        //     }
+                        //     // res.redirect('/image/upload/' + req.param('id'))
+                        //     console.log('hopefully uve sent the image')
+                        // });
+                    });
+                }
+            });
+
+        });
+    },
+    showallvideos(){
+        const cloudinary = require('cloudinary');
+        cloudinary.config({
+            cloud_name: 'troggeurban',
+            api_key: '193435699531835',
+            api_secret: '5I5ZKM1lZ_qO18mRWjYUGTtAwaw'
+        });
+        //the video gotten from the enlisted url is only a link for download
+        cloudinary.api.resources(function (result) { console.log(JSON.stringify(result,null,2)) }, { type: 'upload', resource_type: 'video', prefix: 'biginners_class/' });
+        
+        //this is a sample of the url for video playing
+        //https://res.cloudinary.com/troggeurban/video/upload/biginners_class/Kehlani_-_Gangsta_From_Suicide_Squad-_The_Album_Official_Video.mp4
+    }
 };
 
 // uploadFile: function (req, res) {
