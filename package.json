@@ -43,7 +43,8 @@
     "skipper-s3": "^0.5.9"
   },
   "engines": {
-    "node": "8.9.2"
+    "node": "8.9.2",
+     "npm": "5.5.1"
   },
   "scripts": {
     "debug": "node debug app.js",
