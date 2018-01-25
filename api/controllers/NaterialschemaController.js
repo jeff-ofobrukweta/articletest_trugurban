@@ -7,11 +7,28 @@
 
 module.exports = {
     Videoscreate(req, res) {
+
         const body = req.body;
-        Videosmodel.create(body).then((Videosmodel) => {
-            res.json(Videosmodel);
+
+        Questions.create({ data: body.questions}).then((result) => {
+            body.video.questions = result.id;
+            return Videosmodel.create(body.video);
+        }).then((result) => {
+            res.ok(result);
         }).catch((err) => {
+            console.log(err);
             res.badRequest(err.invalidAttributes);
+        });
+    },
+    destroyQuestions(req, res) {
+        const id = req.params.id;
+        const username = req.body.username;
+        Questions.destroy(id).then(function (err) {
+            if (err) {
+                return res.negotiate(err);
+            }
+            sails.log(`The user(s) named ${username} have now been deleted, if there were any.`);
+            return res.ok();
         });
     },
     Allvideos(req, res) {

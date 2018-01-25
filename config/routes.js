@@ -63,6 +63,13 @@ module.exports.routes = {
       origin: 'http://foobar.com,https://owlhoot.com'
     }
   },
+  'DELETE /destroyQuestions/:id': {
+    controller: 'NaterialschemaController',
+    action: 'destroyQuestions',
+    cors: {
+      origin: 'http://foobar.com,https://owlhoot.com'
+    }
+  },
   'POST /api/v1/auth/facebook': {
     controller: 'AuthControllerControllerController',
     action: 'facebookAuth'
@@ -111,7 +118,7 @@ module.exports.routes = {
     controller: 'NaterialschemaController',
     action: 'french'
   },
-<<<<<<< HEAD
+
   'POST /upload_content': {
     controller: 'Upload_contentController',
     action: 'upload_content'
@@ -129,7 +136,7 @@ module.exports.routes = {
     action: 'Videoscreate',
     cors: {
       origin: 'http://foobar.com,https://owlhoot.com'
-    }
+    },
   },
     'POST /findonethroughEmail': {
       controller: 'UserController',
@@ -144,12 +151,6 @@ module.exports.routes = {
         cors: {
           origin: 'http://foobar.com,https://owlhoot.com'
         }
-  }
-  
-=======
-  'GET /listFiles': {
-    controller: 'Upload_contentController',
-    action: 'listbucket'
   },
   'GET /All': {
     controller: 'UserController',
@@ -162,8 +163,6 @@ module.exports.routes = {
   
 // this section is the route configuration for updating the information on the application via the api
   
-
->>>>>>> 5437deda35172ab519f3827a0b23cf157251572a
   /***************************************************************************
   *                                                                          *
   * Custom routes here...                                                    *

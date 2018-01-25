@@ -76,17 +76,10 @@ passport.use(new LocalStrategy({
 ));
 
 'use strict';
-<<<<<<< HEAD
 var verifyHandler = (req, token, tokenSecret, profile, done)=> {
   process.nextTick(()=> {
     var url = 'https://graph.facebook.com/v2.4/me?access_token=%s&fields=id,name,email,username,phone_number,password';
     url = url.replace('%s', token);
-=======
-var verifyHandler =function(req, token,tokenSecret,profile,done){
-    process.nextTick(function() {
-        var url = 'https://graph.facebook.com/v2.4/me?access_token=%s&fields=id,name,email,username,phone_number,password';
-        url = url.replace('%s', token);
->>>>>>> 5437deda35172ab519f3827a0b23cf157251572a
 
     var options = { method: 'GET', url: url, json: true };
     request(options, function (err, response) {
