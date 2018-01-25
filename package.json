@@ -42,6 +42,9 @@
     "skipper-gridfs": "^0.5.3",
     "skipper-s3": "^0.5.9"
   },
+  "engines": {
+    "node": "8.9.2"
+  },
   "scripts": {
     "debug": "node debug app.js",
     "start": "node app.js",
