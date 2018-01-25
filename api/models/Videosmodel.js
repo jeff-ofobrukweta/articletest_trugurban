@@ -40,13 +40,12 @@ module.exports = {
         defaultsTo: false
       },
       questions: {
-        firstname: 'string',
-        lastname: 'string',
-        photo: 'string',
-        birthdate: 'date',
-        zipcode: 'integer'
+        firstname: 'json',
+        lastname: 'json',
+        photo: 'json'
       },
       excercises: {
+        questions:true,
         type: 'array',
         required: false
       }, 
