@@ -17,12 +17,12 @@ module.exports = {
    * environment (see config/connections.js and config/models.js )           *
    ***************************************************************************/
 // Override the default datastore settings in production.
-datastores: {
-  default: {
-    // No need to set `adapter` again, because we already configured it in `config/datastores.js`.
-    url: 'mongodb://heroku_8r1032sz:trs53st91cdc38s6ec748dkqve@ds161304.mlab.com:61304/heroku_8r1032sz',
-  }
-},
+// datastores: {
+//   default: {
+//     // No need to set `adapter` again, because we already configured it in `config/datastores.js`.
+//     url: 'mongodb://heroku_8r1032sz:trs53st91cdc38s6ec748dkqve@ds161304.mlab.com:61304/heroku_8r1032sz',
+//   }
+// },
   // models: {
   //   connection: 'someMysqlServer'
   // },
