@@ -58,6 +58,16 @@ module.exports = {
       required: false,
       unique: true
     },
+    useremail: {
+      type: 'string',
+      required: false,
+      unique: false
+    },
+    download_url: {
+      type: 'string',
+      required: false,
+      unique: false
+    },
     toJSON: function () {
       var obj = this.toObject();
       // delete obj.password;

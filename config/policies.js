@@ -26,10 +26,21 @@ module.exports.policies = {
   *                                                                          *
   ***************************************************************************/
 
+<<<<<<< HEAD
   '*': true
     // 'User':{
     //   '*':'sessionAuth'
     // }
+=======
+  UserController: {
+    // Apply 'isLoggedIn' by default to all actions that are NOT specified below
+    'login': 'sessionAuth',
+    // If an action is explicitly listed, its policy list will override the default list.
+    // So, we have to list 'isLoggedIn' again for the 'edit' action if we want it to be applied.
+    // edit: ['isAdmin', 'isLoggedIn']
+  }
+
+>>>>>>> 5437deda35172ab519f3827a0b23cf157251572a
   /***************************************************************************
   *                                                                          *
   * Here's an example of mapping some policies to run before a controller    *

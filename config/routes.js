@@ -111,6 +111,7 @@ module.exports.routes = {
     controller: 'NaterialschemaController',
     action: 'french'
   },
+<<<<<<< HEAD
   'POST /upload_content': {
     controller: 'Upload_contentController',
     action: 'upload_content'
@@ -145,6 +146,24 @@ module.exports.routes = {
         }
   }
   
+=======
+  'GET /listFiles': {
+    controller: 'Upload_contentController',
+    action: 'listbucket'
+  },
+  'GET /All': {
+    controller: 'UserController',
+    action: 'All'
+  },
+  'POST /forgot_password': {
+    controller: 'NodemailerController',
+    action: 'forgot_password'
+  },
+  
+// this section is the route configuration for updating the information on the application via the api
+  
+
+>>>>>>> 5437deda35172ab519f3827a0b23cf157251572a
   /***************************************************************************
   *                                                                          *
   * Custom routes here...                                                    *
