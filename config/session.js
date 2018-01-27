@@ -62,11 +62,11 @@ module.exports.session = {
   // pass: <redis auth password>,
   // prefix: 'sess:',
 
-  adapter: 'redis',
-  host: 'soldierfish.redistogo.com',
-  port: 10733,
-  db: '1',
-  pass: 'e472b1b92456ba2a8bf929f1f342e59a'
+  // adapter: 'redis',
+  // host: 'soldierfish.redistogo.com',
+  // port: 10733,
+  // db: '1',
+  // pass: 'e472b1b92456ba2a8bf929f1f342e59a'
   /***************************************************************************
   *                                                                          *
   * Uncomment the following lines to set up a MongoDB session store that can *
