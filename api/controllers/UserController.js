@@ -165,9 +165,9 @@ module.exports = {
           if (error) {
             return console.log(error);
           }
-          console.log('Message sent: %s', info.messageId);
+          res.json('Message sent: %s', info.messageId);
           // Preview only available when sending through an Ethereal account
-          console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
+          res.json('Preview URL: %s', nodemailer.getTestMessageUrl(info));
 
           // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@blurdybloop.com>
           // Preview URL: https://ethereal.email/message/WaQKMgKddxQDoou...
@@ -189,7 +189,7 @@ module.exports = {
   newupdate(req,res){
     const cookiesID = req.cookies.rememberme;
     console.log('::::::::' + JSON.stringify(cookiesID,null, 2))
-    console.log(JSON.stringify(req.body, null, 2))
+    console.log(JSON.stringify(req.session, null, 2))
     //var validation_tokenR = req.query.validation_token;
     var password = req.body.password;
     User.findOne({
@@ -202,26 +202,44 @@ module.exports = {
         return res.notFound('Could not find user, sorry.');
       }
 
-      // sails.log('Found "%s"', user);
-      return console.log('--------------------' + JSON.stringify(user,null,2))
-    });
-    if (password==='') {
-      res.view('changepassword')
-    }
-    User.update({ id: cookiesID },
-      {
-        password: password
+      if (password==='') {
+        res.view('changepassword')
       }
-    ).then((updated) => {
-      console.log(`This is the new password ::::::${password}`)
-      console.log(`This is the new password ::::::${JSON.stringify(updated, null, 2)}`)
-      // delete updated[0].validation_token;
-      res.json(updated[0])
-      console.log(':::::::' + updated[0])
-      delete cookiesID
-    }).catch((err) => {
-      res.badRequest(err);
-      console.log(`sorry the user cannot be updated due to the errors encountered`)
+      else{
+        bcryptjs.genSalt(10, function (err, salt) {
+          bcryptjs.hash(password, salt, function (err, hash) {
+            if (err) {
+              console.log(err);
+              cb(err);
+            } else {
+              password = hash;
+              console.log("this the new hashed password"+hash)
+              console.log("this is the password inside the user schema"+req.body.password)
+            }
+          });
+        });
+      }
+     // console.log("hey this is user"+JSON.stringify(User,null,2))
+      console.log(password)
+      // sails.log('Found "%s"', user);
+      return console.log('--------------------' + JSON.stringify(user.password,null,2))
+      
+      User.update({ id: cookiesID },
+        {
+          password: hash
+        }
+      ).then((updated) => {
+        console.log(`This is the new password ::::::${password}`)
+        console.log(`This is the new password ::::::${JSON.stringify(updated, null, 2)}`)
+        console.log("this is the changed password inside the user schema"+req.body.password)
+        // delete updated[0].validation_token;
+        res.json(updated[0])
+        console.log(':::::::' + updated[0])
+        delete cookiesID
+      }).catch((err) => {
+        res.badRequest(err);
+        console.log(`sorry the user cannot be updated due to the errors encountered`)
+      });
     });
 
   },

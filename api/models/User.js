@@ -11,29 +11,20 @@ var bcryptjs = require('bcryptjs');
 module.exports = {
   schema: true,
   attributes: {
-    firstname: {
-      type: 'string',
-      required: true,
-      unique: true
-    },
-    secondname: {
-      type: 'string',
-      required: true
-    },
-    phone_number: {
-      type: 'string',
-      required: true,
-      minLength: 11,
-      unique: true
-    },
     email: {
       type: 'string',
       required: true,
       unique: true
     },
-    delivery_address: {
+    lastname: {
       type: 'string',
       required: true
+    },
+    firstname: {
+      type: 'string',
+      required: true,
+      minLength: 11,
+      unique: true
     },
     sex: {
       type: 'string',
@@ -57,11 +48,6 @@ module.exports = {
       type: 'string',
       required: false,
       unique: true
-    },
-    useremail: {
-      type: 'string',
-      required: false,
-      unique: false
     },
     download_url: {
       type: 'string',
@@ -103,7 +89,6 @@ module.exports = {
       });
     });
   },
-
   //Before update,if a token was passed in,Create a new one
   afternewupdate: function (values, next) {
     // if (values.) {

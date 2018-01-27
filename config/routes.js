@@ -127,6 +127,10 @@ module.exports.routes = {
     controller: 'Upload_contentController',
     action: 'upload_video'
   },
+  'POST /updatepwd': {
+    controller: 'UserController',
+    action: 'newupdate'
+  },
   'GET /showallvideos': {
    controller: 'Upload_contentController',
     action: 'showallvideos'
