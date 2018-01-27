@@ -50,7 +50,7 @@ module.exports.sockets = {
   // db: 0,
   // pass: '<redis auth password>',
 
-  adapter: 'redis',
+  adapter: 'socket.io-redis',
   host: 'soldierfish.redistogo.com',
   port: 10733,
   db: '1',
