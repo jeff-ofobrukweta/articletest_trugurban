@@ -77,7 +77,10 @@ module.exports = {
       next();
     }
   },
-  beforeCreate: function (user, cb) {
+  beforeCreate: function (user, cb,res) {
+    if(user.password || user.email|| user.firstname|| user.lastname|| user.sex|| user.language ==='' ){
+      res.json({message:'one field is void please fill'})
+    }
     bcryptjs.genSalt(10, function (err, salt) {
       bcryptjs.hash(user.password, salt, function (err, hash) {
         if (err) {

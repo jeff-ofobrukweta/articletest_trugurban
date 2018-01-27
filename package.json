@@ -9,6 +9,7 @@
     "@google-cloud/storage": "^1.5.2",
     "bcryptjs": "^2.4.3",
     "cloudinary": "^1.9.1",
+    "connect-redis": "^1.4.7",
     "ejs": "2.3.4",
     "googleapis": "^23.0.0",
     "grunt-contrib-clean": "1.0.0",
