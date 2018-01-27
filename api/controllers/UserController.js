@@ -11,7 +11,7 @@ module.exports = {
     User.create(body).then((user) => {
       res.json(user);
     }).catch((err) => {
-      res.badRequest(JSON.stringify(err.invalidAttributes,null,2));
+      res.json(JSON.stringify(err.invalidAttributes,null,2));
     });
   },
   All(req, res) {
