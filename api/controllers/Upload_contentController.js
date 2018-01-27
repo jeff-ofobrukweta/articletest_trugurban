@@ -180,7 +180,7 @@ module.exports = {
                     return res.send(500, err);
                 } else {
                     cloudinary.uploader.upload(fileDesc, function (result) {
-                        console.log("hello " + fileDesc)
+                        res.json("hello " + fileDesc)
                         // Images.update(req.param('id'), { imagePath: result.url }, function imageUpdated(err) {
                         //     if (err) {
                         //         console.log(err);

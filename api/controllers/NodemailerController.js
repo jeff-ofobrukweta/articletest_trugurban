@@ -15,7 +15,7 @@ module.exports = {
         // require the link from the after create in the /model/user.js
         const collectLinkforusertoclick = require('../models/User.js');
 
-        const useremail = req.body.useremail;
+        const useremail = req.body.email;
         const download_url = req.body.download_url;
 
         console.log('useremail',useremail)
