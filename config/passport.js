@@ -20,7 +20,7 @@ passport.deserializeUser(function (id, done) {
 passport.use(new GoogleStrategy({
   clientID: "244824053065-jovhdgp6qcadob0a7j6ka22lef0r7v6a.apps.googleusercontent.com",
   clientSecret: "anP3LWpyssH3EUynXTYE6zXT",
-  callbackURL: "http://localhost:80"
+  callbackURL: "https://brents-url-olango.herokuapp.com"
 },
   function (accessToken, regreshToken, profile, done) {
     process.nextTick(function () {
@@ -78,7 +78,7 @@ passport.use(new LocalStrategy({
 'use strict';
 var verifyHandler = (req, token, tokenSecret, profile, done)=> {
   process.nextTick(()=> {
-    var url = 'https://graph.facebook.com/v2.4/me?access_token=%s&fields=id,name,email,username,phone_number,password';
+    var url = 'https://graph.facebook.com/v2.4/me?access_token=%s&fields=id,firstname,email,lastname,sex,password';
     url = url.replace('%s', token);
 
     var options = { method: 'GET', url: url, json: true };
@@ -89,8 +89,8 @@ var verifyHandler = (req, token, tokenSecret, profile, done)=> {
 
       var data = {
         id: response.body.id,
-        username: response.body.username,  //jshint ignore:line
-        phone_number: response.body.phone_number,    //jshint ignore:line
+        firstname: response.body.firstname,  //jshint ignore:line
+        lastname: response.body.lastname,    //jshint ignore:line
         email: response.body.email,
         password: response.body.password
       };
@@ -103,6 +103,6 @@ var verifyHandler = (req, token, tokenSecret, profile, done)=> {
 passport.use(new FacebookStrategy({
   clientID: 1619209608101225,
   clientSecret: '865f57d38ea24dffebab281500d2debc' ,
-  callbackURL: 'http://localhost',
+  callbackURL: 'https://brents-url-olango.herokuapp.com',
   passReqToCallback: true
 }, verifyHandler));
