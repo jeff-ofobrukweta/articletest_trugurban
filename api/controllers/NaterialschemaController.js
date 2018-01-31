@@ -9,11 +9,44 @@ module.exports = {
     Videoscreate(req, res) {
 
         const body = req.body;
-
+        console.log(body)
         Questions.create({ data: body.questions}).then((result) => {
-            body.video.questions = result.id;
-            return Videosmodel.create(body.video);
+            console.log('this is the important part::'+result.id);
+            body.questions = result.id;
+            return Promise.all([result.id,Videosmodel.create(body)]);
         }).then((result) => {
+            result[1].questions.add(result[0]);
+            result[1].save().then(()=>{});
+            
+            res.ok(result);
+        }).catch((err) => {
+            console.log(err);
+            res.badRequest(err.invalidAttributes);
+        });
+        // const body = req.body;
+        // Videosmodel.findOne(6).then((result) => {
+        //     const sd = Questions.create({ data: body.questions});
+        //     return Promise.all([sd,result]);
+        // }).then((result) => {
+        //     result[1].questions.add(result[0].id);
+        //     result[1].save().then(()=>{});
+            
+        //     res.ok(result);
+        // }).catch((err) => {
+        //     console.log(err);
+        //     res.badRequest(err.invalidAttributes);
+        // });
+    },
+    addOuestions(req, res) {
+        const id = req.params.id;
+        const body = req.body;
+        Videosmodel.findOne(id).then((result) => {
+            const sd = Questions.create({ data: body.questions});
+            return Promise.all([sd,result]);
+        }).then((result) => {
+            result[1].questions.add(result[0].id);
+            result[1].save().then(()=>{});
+            
             res.ok(result);
         }).catch((err) => {
             console.log(err);
@@ -33,7 +66,7 @@ module.exports = {
     },
     Allvideos(req, res) {
         const body = req.body;
-        Videosmodel.find(body).then((videos) => {
+        Videosmodel.find(body).populate('questions').then((videos) => {
             sails.log(videos)
             // console.log(sails.hooks.http.app);    
             return res.json(videos);

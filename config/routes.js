@@ -31,7 +31,8 @@ module.exports.routes = {
   * `assets` directory)                                                      *
   *                                                                          *
   ***************************************************************************/
-
+  
+  
   '/': {
     view: 'homepage'
   },
@@ -48,6 +49,13 @@ module.exports.routes = {
   'GET /logout': {
     controller: 'AuthControllerControllerController',
     action: 'logout',
+    cors: {
+      origin: 'http://foobar.com,https://owlhoot.com'
+    }
+  },
+  'POST /addOuestions/:id': {
+    controller: 'NaterialschemaController',
+    action: 'addOuestions',
     cors: {
       origin: 'http://foobar.com,https://owlhoot.com'
     }
@@ -98,7 +106,11 @@ module.exports.routes = {
     controller: 'UserController',
     action: 'All'
   },
-  'GET /nodemailer': {
+  'POST /sendmailgun': {
+    controller: 'NodemailerController',
+    action: 'sendmailgun'
+  },
+  'POST /nodemailer': {
     controller: 'NodemailerController',
     action: 'forgot_password'
   },
@@ -127,9 +139,9 @@ module.exports.routes = {
     controller: 'Upload_contentController',
     action: 'upload_video'
   },
-  'POST /updatepwd': {
+  'POST /updatenew': {
     controller: 'UserController',
-    action: 'newupdate'
+    action: 'updatenew'
   },
   'GET /showallvideos': {
    controller: 'Upload_contentController',
@@ -164,7 +176,10 @@ module.exports.routes = {
     controller: 'NodemailerController',
     action: 'forgot_password'
   },
-  
+  'POST /updateUser/:id': {
+    controller: 'UserController',
+    action: 'updateUser'
+  }
 // this section is the route configuration for updating the information on the application via the api
   
   /***************************************************************************

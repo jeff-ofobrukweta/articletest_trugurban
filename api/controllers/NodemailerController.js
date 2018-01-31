@@ -56,7 +56,19 @@ module.exports = {
                 // Preview URL: https://ethereal.email/message/WaQKMgKddxQDoou...
             });
         });
-    }
+    },
+    sendmailgun: function (req, res) {
+          User.create(req.body).exec(function (err, user) {
+            if (err) {
+              return res.json(err.status, {err: err});
+            }
+            if (user) {
+              Mailer.sendWelcomeMail(user);
+              res.json(200, {user: user});
+            }
+          });
+        }
+
 };
 
 

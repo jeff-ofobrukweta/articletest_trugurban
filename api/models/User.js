@@ -25,7 +25,6 @@ module.exports = {
     firstname: {
       type: 'string',
       required: true,
-      minLength: 11,
       unique: true
     },
     sex: {
@@ -56,6 +55,11 @@ module.exports = {
       required: false,
       unique: false
     },
+    default_Questions: {
+      type: 'string',
+      required: false,
+      unique: false
+    },
     toJSON: function () {
       var obj = this.toObject();
       // delete obj.password;
@@ -78,9 +82,9 @@ module.exports = {
     }
   },
   beforeCreate: function (user, cb,res) {
-    if(user.password || user.email|| user.firstname|| user.lastname|| user.sex|| user.language ==='' ){
-      res.json({message:'one field is void please fill'})
-    }
+    // if(user.password || user.email|| user.firstname|| user.lastname|| user.sex|| user.language ==='' ){
+    //   res.json({message:'one field is void please fill'})
+    // }
     bcryptjs.genSalt(10, function (err, salt) {
       bcryptjs.hash(user.password, salt, function (err, hash) {
         if (err) {
@@ -94,18 +98,24 @@ module.exports = {
       });
     });
   },
-  //Before update,if a token was passed in,Create a new one
-  afternewupdate: function (values, next) {
-    // if (values.) {
-    //   values.validation_token = bcryptjs.hashSync(String(new Date().getTime()));
-    //   console.log('New validation Token');
-    //   console.log(values.validation_token);
-    //   delete values.new_token;
-    // }
-    console.log('after update functionality')
-    next();
-  },
 
+  beforeUpdate: function (user, cb,res) {
+    // if(user.password || user.email|| user.firstname|| user.lastname|| user.sex|| user.language ==='' ){
+    //   res.json({message:'one field is void please fill'})
+    // }
+    bcryptjs.genSalt(10, function (err, salt) {
+      bcryptjs.hash(user.password, salt, function (err, hash) {
+        if (err) {
+          console.log(err);
+          cb(err);
+        } else {
+          user.password = hash;
+          console.log(hash)
+          cb();
+        }
+      });
+    });
+  },
   afterCreate: function (user, next) {
     //Email the user the validation link after creation
     if (user.email != "admin@example.com") {

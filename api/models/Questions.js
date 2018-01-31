@@ -10,6 +10,9 @@ module.exports = {
 attributes: {
    data: {
       type: 'string'
+    },
+    video: {
+      model: 'videosmodel'
     }
   }
 };

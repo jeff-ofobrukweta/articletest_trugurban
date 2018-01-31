@@ -9,9 +9,10 @@ module.exports = {
   create(req, res) {
     const body = req.body;
     User.create(body).then((user) => {
-      res.json(user);
+        Mailer.sendWelcomeMail(user);
+        res.json(200, {user: user});
     }).catch((err) => {
-      console.log((err.invalidAttributes));
+      res.json(("message :"+err.invalidAttributes.password[0].rule+" "+"details :"+" "+"please check the input form for valid credencials"));
       
     });
   },
@@ -56,7 +57,7 @@ module.exports = {
   },
   destroyUser(req, res) {
     const id = req.params.id;
-    const username = req.body.username;
+    const username = req.body.usUserControllerername;
     User.destroy(id).then(function (err) {
       if (err) {
         return res.negotiate(err);
@@ -187,64 +188,76 @@ module.exports = {
 
     
   },
-  newupdate(req,res){
+  updatenew(req,res){
     const cookiesID = req.cookies.rememberme;
     console.log('::::::::' + JSON.stringify(cookiesID,null, 2))
     console.log(JSON.stringify(req.session, null, 2))
     //var validation_tokenR = req.query.validation_token;
     var password = req.body.password;
-    User.findOne({
-      id: cookiesID
-    }).exec(function (err, user) {
-      if (err) {
-        return res.serverError(err);
+    User.update({ id: cookiesID },
+      {
+        password: password
       }
-      if (!user) {
-        return res.notFound('Could not find user, sorry.');
-      }
-
-      if (password==='') {
-        res.view('changepassword')
-      }
-      else{
-        bcryptjs.genSalt(10, function (err, salt) {
-          bcryptjs.hash(password, salt, function (err, hash) {
-            if (err) {
-              console.log(err);
-              cb(err);
-            } else {
-              password = hash;
-              console.log("this the new hashed password"+hash)
-              console.log("this is the password inside the user schema"+req.body.password)
-            }
-          });
-        });
-      }
-     // console.log("hey this is user"+JSON.stringify(User,null,2))
-      console.log(password)
-      // sails.log('Found "%s"', user);
-      return console.log('--------------------' + JSON.stringify(user.password,null,2))
-      
-      User.update({ id: cookiesID },
-        {
-          password: hash
-        }
-      ).then((updated) => {
-        console.log(`This is the new password ::::::${password}`)
-        console.log(`This is the new password ::::::${JSON.stringify(updated, null, 2)}`)
-        console.log("this is the changed password inside the user schema"+req.body.password)
-        // delete updated[0].validation_token;
-        res.json(updated[0])
-        console.log(':::::::' + updated[0])
-        delete cookiesID
-      }).catch((err) => {
-        res.badRequest(err);
-        console.log(`sorry the user cannot be updated due to the errors encountered`)
-      });
+    ).then((updated) => {
+      res.json(updated[0])
+    }).catch((err) => {
+      res.badRequest(err);
+      console.log(`sorry the user cannot be updated due to the errors encountered`)
     });
 
-  },
 
+    // User.findOne({
+    //   id: cookiesID
+    // }).exec(function (err, user) {
+    //   if (err) {
+    //     return res.serverError(err);
+    //   }
+    //   if (!user) {
+    //     return res.notFound('Could not find user, sorry.');
+    //   }
+
+    //   if (password==='') {
+    //     res.view('changepassword')
+    //   }
+    //   else{
+    //     bcryptjs.genSalt(10, function (err, salt) {
+    //       bcryptjs.hash(password, salt, function (err, hash) {
+    //         if (err) {
+    //           console.log(err);
+    //           cb(err);
+    //         } else {
+    //           req.body.password = hash;
+    //           console.log("this the new hashed password"+hash)
+    //           console.log("this is the password inside the user schema"+req.body.password)
+    //         }
+    //       });
+    //     });
+    //     console.log("this is the missing shit:::"+password)
+    //   }
+    //  // console.log("hey this is user"+JSON.stringify(User,null,2))
+    //   console.log(password)
+    //   // sails.log('Found "%s"', user);
+    //   return console.log('--------------------' + JSON.stringify(user.password,null,2))
+      
+    //   // User.update({ id: cookiesID },
+    //   //   {
+    //   //     password: hash
+    //   //   }
+    //   // ).then((updated) => {
+    //   //   console.log(`This is the new password ::::::${password}`)
+    //   //   console.log(`This is the new password ::::::${JSON.stringify(updated, null, 2)}`)
+    //   //   console.log("this is the changed password inside the user schema"+req.body.password)
+    //   //   // delete updated[0].validation_token;
+    //   //   res.json(updated[0])
+    //   //   console.log(':::::::' + updated[0])
+    //   //   delete cookiesID
+    //   // }).catch((err) => {
+    //   //   res.badRequest(err);
+    //   //   console.log(`sorry the user cannot be updated due to the errors encountered`)
+    //   // });
+    // });
+
+  },
   view(req,res){
     var validation_tokenR = req.query.validation_id;
     //var validation_tokenbody = req.body.validation_token;
@@ -265,4 +278,3 @@ module.exports = {
     
   }
 };
-

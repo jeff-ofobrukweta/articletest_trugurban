@@ -16,7 +16,8 @@ module.exports = {
         type: 'integer'
       },
       questions: {
-        model: 'questions'
+        collection: 'questions',
+        via: 'video'
      }
 }
 }
