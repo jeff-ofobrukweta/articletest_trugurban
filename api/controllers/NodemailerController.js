@@ -48,7 +48,10 @@ module.exports = {
                 if (error) {
                     return console.log(error);
                 }
-                res.json({Messagesent:info.messageId});
+                res.json({
+                    Messagesent:info.messageId,
+                    Messageinfo:'check your mail to confirm the sent link'
+                });
                 // Preview only available when sending through an Ethereal account
                 res.json({PreviewURL:nodemailer.getTestMessageUrl(info)});
                 // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@blurdybloop.com>
