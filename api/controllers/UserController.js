@@ -35,7 +35,7 @@ module.exports = {
         Mailer.sendWelcomeMail(user);
         res.json(200, {user: user});
     }).catch((err) => {
-      res.json(("message :"+err.invalidAttributes.password[0].rule+" "+"details :"+" "+"please check the input form for valid credencials"));
+      res.json((err.invalidAttributes));
       
     });
   },

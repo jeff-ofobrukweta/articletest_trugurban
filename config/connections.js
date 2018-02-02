@@ -57,7 +57,7 @@ module.exports.connections = {
   *                                                                          *
   ***************************************************************************/
   // someMongodbServer: {
-  //   adapter: 'sails-mongo',
+  //   adapter: 'sails-disk',
   //   host: 'localhost',
   //   port: 27017,
   //   user: '', //optional
@@ -69,7 +69,7 @@ module.exports.connections = {
     url: 'mongodb://heroku_8r1032sz:trs53st91cdc38s6ec748dkqve@ds161304.mlab.com:61304/heroku_8r1032sz',
     schema:true
   },
-
+  //mongodb://<dbuser>:<dbpassword>@ds139430.mlab.com:39430/olando
   /***************************************************************************
   *                                                                          *
   * PostgreSQL is another officially supported relational database.          *
