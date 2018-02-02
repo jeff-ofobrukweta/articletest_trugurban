@@ -4,8 +4,8 @@ var nodemailer = require('nodemailer');
 module.exports.email = {
   service: "Mailgun",
   auth: {
-    user: "postmaster@sandbox1dfeb5e2670d426dab73efb63e695acb.mailgun.org", 
-    pass: "october3119931"
+    user: "postmaster@trial.fabricsbyijay.com", 
+    pass: "8288d82b32219704fd7215d3efc9a027"
   },
   templateDir: "views/emailTemplates",
   from: "oghenerukevwejeff@gmail.com",

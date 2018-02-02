@@ -11,7 +11,6 @@ module.exports = {
         const body = req.body;
         console.log(body)
         Questions.create({ data: body.questions}).then((result) => {
-            console.log('this is the important part::'+result.id);
             body.questions = result.id;
             return Promise.all([result.id,Videosmodel.create(body)]);
         }).then((result) => {
@@ -90,6 +89,23 @@ module.exports = {
             sails.log(':::::::', Videosmodel);
             return res.json(Videosmodel);
         });
-    }
+    },
+    // homeworkcreate(req, res) {
+
+    //     const id = req.params.id;
+    //     const body = req.body;
+    //     Videosmodel.findOne(id).then((result) => {
+    //         const sd = Exercises.create({ data1: body.exercises});
+    //         return Promise.all([sd,result]);
+    //     }).then((result) => {
+    //         result[1].exercises.add(result[0].id);
+    //         result[1].save().then(()=>{});
+            
+    //         res.ok(result);
+    //     }).catch((err) => {
+    //         console.log(err);
+    //         res.badRequest(err.invalidAttributes);
+    //     });
+    // }
 };
 

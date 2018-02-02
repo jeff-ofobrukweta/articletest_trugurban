@@ -8,7 +8,30 @@ var bcryptjs = require('bcryptjs');
 module.exports = {
   create(req, res) {
     const body = req.body;
+    const email = req.body.email;
+    const password = req.body.password;
+    const firstname = req.body.firstname;
+    const lastname = req.body.lastname;
+    
     User.create(body).then((user) => {
+      // if (_.isUndefined(firstname)) {
+      //   return res.badRequest('A firstname address is required!');
+      //   }
+      //   if (_.isUndefined(email)) {
+      //   return res.badRequest('An email is required!');
+      //   }
+      //   if (password.length > 6) { 
+      //   return res.badRequest('Password must be at least 6 characters!');
+      //   }
+      //   // if (_.isUndefined(req.param('firstname'))) {
+      //   // return res.badRequest('A username is required!');
+      //   // }
+      //   if (lastname.length < 6) {
+      //   return res.badRequest('lastname must be at least 6 characters!');
+      //   }
+      //   if (!_.isString(firstname) || firstname.match(/[^a-z0-9]/i)) {
+      //   return res.badRequest('Invalid username: must consist of numbers and letters only.');
+      //   }
         Mailer.sendWelcomeMail(user);
         res.json(200, {user: user});
     }).catch((err) => {
@@ -260,7 +283,6 @@ module.exports = {
   },
   view(req,res){
     var validation_tokenR = req.query.validation_id;
-    //var validation_tokenbody = req.body.validation_token;
     console.log('::::::===>>>'+validation_tokenR);
     User.findOne({
       id: validation_tokenR

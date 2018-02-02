@@ -12,12 +12,13 @@ module.exports = {
       name: {
         type: 'string'
       },
-      age: {
-        type: 'integer'
+      videourl: {
+        type: 'string'
       },
       questions: {
         collection: 'questions',
         via: 'video'
      }
+     
 }
 }

@@ -60,6 +60,13 @@ module.exports.routes = {
       origin: 'http://foobar.com,https://owlhoot.com'
     }
   },
+  // 'POST /homeworkcreate/:id': {
+  //   controller: 'NaterialschemaController',
+  //   action: 'homeworkcreate',
+  //   cors: {
+  //     origin: 'http://foobar.com,https://owlhoot.com'
+  //   }
+  // },
   'POST /login': {
     controller: 'AuthControllerControllerController',
     action: 'login'
