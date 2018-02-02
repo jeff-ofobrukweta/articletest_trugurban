@@ -36,7 +36,7 @@ module.exports = {
 
             // setup email data with unicode symbols
             let mailOptions = {
-                from: '"JEFF OFOBRUKWETA 👻" <norepley@truggurban.com>', // sender address
+                from: '"noreply@laclicservices 👻" <norepley@laclicservices.com>', // sender address
                 to: useremail, // list of receivers
                 subject: 'RESSET PASSWORD FOR CHOWNOW ✔', // Subject line
                 text: 'resset your password', // plain text body
