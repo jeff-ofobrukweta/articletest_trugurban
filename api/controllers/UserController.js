@@ -162,7 +162,7 @@ module.exports = {
       // Generate test SMTP service account from ethereal.email
       // Only needed if you don't have a real mail account for testing
       nodemailer.createTestAccount((err, account) => {
-        var collect = sails.getBaseUrl() + "/reset?" + "validation_id=" + id + "&validate-email=" + emailhash + "&validation_token=" + dont_messupMyguy;
+        var collect = 'https://brents-url-olango.herokuapp.com' + "/reset?" + "validation_id=" + id + "&validate-email=" + emailhash + "&validation_token=" + dont_messupMyguy;
         // console.log('this is the email of the user'+email)
         // create reusable transporter object using the default SMTP transport
         let transporter = nodemailer.createTransport({
