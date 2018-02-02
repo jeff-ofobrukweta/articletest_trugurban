@@ -57,7 +57,7 @@ module.exports.connections = {
   *                                                                          *
   ***************************************************************************/
   someMongodbServer: {
-    adapter: 'sails-disk',
+    adapter: 'sails-mongo',
     host: 'localhost',
     port: 27017,
     user: '', //optional
