@@ -8,7 +8,18 @@
 module.exports = {
 
   attributes: {
-
+    // ithis is the relationship with mdel question
+    subquestiondata: {
+      type: 'string'
+    },
+    subquest: {
+      model: 'questions'
+    },
+    // 
+    exercises: {
+      collection: 'exercises',
+      via: 'exeworks'
+   }
   }
 };
 

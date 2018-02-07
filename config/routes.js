@@ -60,13 +60,6 @@ module.exports.routes = {
       origin: 'http://foobar.com,https://owlhoot.com'
     }
   },
-  // 'POST /homeworkcreate/:id': {
-  //   controller: 'NaterialschemaController',
-  //   action: 'homeworkcreate',
-  //   cors: {
-  //     origin: 'http://foobar.com,https://owlhoot.com'
-  //   }
-  // },
   'POST /login': {
     controller: 'AuthControllerControllerController',
     action: 'login'
@@ -78,9 +71,9 @@ module.exports.routes = {
       origin: 'http://foobar.com,https://owlhoot.com'
     }
   },
-  'DELETE /destroyQuestions/:id': {
-    controller: 'NaterialschemaController',
-    action: 'destroyQuestions',
+  'DELETE /destroyUser/:id': {
+    controller: 'UserController',
+    action: 'destroyUser',
     cors: {
       origin: 'http://foobar.com,https://owlhoot.com'
     }
@@ -129,9 +122,9 @@ module.exports.routes = {
     controller: 'UserController',
     action: 'view'
   },
-  'POST /findcategory': {
+  'GET /findintermediate': {
     controller: 'NaterialschemaController',
-    action: 'findcategory'
+    action: 'findintermediate'
   },
   'GET /french': {
     controller: 'NaterialschemaController',
@@ -154,6 +147,10 @@ module.exports.routes = {
    controller: 'Upload_contentController',
     action: 'showallvideos'
   },
+  'GET /Allquestionmodel': {
+    controller: 'NaterialschemaController',
+     action: 'Allquestionmodel'
+   },
   'POST /Videoscreate': {
     controller: 'NaterialschemaController',
     action: 'Videoscreate',
@@ -186,7 +183,13 @@ module.exports.routes = {
   'POST /updateUser/:id': {
     controller: 'UserController',
     action: 'updateUser'
-  }
+  },
+
+  'POST /subquestionscreate': {
+    controller: 'NaterialschemaController',
+    action: 'subquestionscreate'
+  },
+
 // this section is the route configuration for updating the information on the application via the api
   
   /***************************************************************************

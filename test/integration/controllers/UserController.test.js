@@ -8,14 +8,14 @@
  * @supertest 	:: https://github.com/visionmedia/supertest
  */
 "use strict";
-
+var sails = require('sails');
 var chai = require('chai');
 var assert = chai.assert;
 var sinon = require('sinon');
 var request = require('supertest');
 var expect =  chai.expect;
 var baseUrl = 'http://localhost:1337';
-var User = require('../../../api/models/user');
+// var User = require('../../../api/models/user');
 
 //TODO: you must create the defining test
 var data = {};
@@ -108,7 +108,19 @@ describe('Controller:User', () => {
             });
         });
     });
+    describe('POST /login', () => {
 
+        describe('it respond with 302 and a redirect on successful login', function() {
+          it('should redirect to /mypage', function (done) {
+            request(sails.hooks.http.app)
+              .post('/users/login')
+              .send({ name: 'test', password: 'test' })
+              .expect(302)
+              .expect('location','/', done);
+          });
+        });
+      
+      });
     // //Clear User after testing
     //  after(function() {
     //     return User.destroy();

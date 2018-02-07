@@ -15,15 +15,16 @@ var sinon = require('sinon');
 var request = require('supertest');
 var expect =  chai.expect;
 var baseUrl = 'http://localhost:80';
-var User = require('../../../api/models/user');
+
+// var User = require('../../../api/models/user');
 
 //TODO: you must create the defining test
 var data = {};
 describe('Controller:User', () => { 
-	describe('POST /User', () => {
+	describe('POST /create', () => {
         it('Should creat new User', done => {
             request(sails.hooks.http.app)
-            .post(baseUrl + '/user')
+            .post(baseUrl + '/create')
             .send(data)
             .expect(201)
             .expect('Content-Type', /json/)

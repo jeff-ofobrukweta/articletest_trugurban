@@ -8,12 +8,13 @@
 module.exports = {
 
   attributes: {
-    data1: {
+    // this is the relationship with subquestion
+    exercise: {
       type: 'string'
     },
-    execex: {
-      model: 'videosmodel'
-    }
+    exeworks: {
+      model: 'subquestions'
+    },
   }
 };
 

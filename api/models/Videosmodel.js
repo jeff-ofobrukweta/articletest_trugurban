@@ -9,12 +9,10 @@ module.exports = {
 
   attributes: {
     schema: true,
-      name: {
+      level: {
         type: 'string'
       },
-      videourl: {
-        type: 'string'
-      },
+      
       questions: {
         collection: 'questions',
         via: 'video'

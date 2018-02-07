@@ -3,4 +3,4 @@
 --reporter spec
 --recursive
 --full-trace
---timeout 20000
+--timeout 10s

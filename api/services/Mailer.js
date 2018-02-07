@@ -5,7 +5,7 @@ module.exports.sendWelcomeMail = function(obj) {
     sails.hooks.email.send(
         "welcomeEmail", 
         {
-          Name: obj.name
+          firstname: obj.firstname
         },
         {
           to: obj.email,

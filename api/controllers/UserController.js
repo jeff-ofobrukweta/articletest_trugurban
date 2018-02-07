@@ -8,32 +8,9 @@ var bcryptjs = require('bcryptjs');
 module.exports = {
   create(req, res) {
     const body = req.body;
-    const email = req.body.email;
-    const password = req.body.password;
-    const firstname = req.body.firstname;
-    const lastname = req.body.lastname;
-    
     User.create(body).then((user) => {
-      // if (_.isUndefined(firstname)) {
-      //   return res.badRequest('A firstname address is required!');
-      //   }
-      //   if (_.isUndefined(email)) {
-      //   return res.badRequest('An email is required!');
-      //   }
-      //   if (password.length > 6) { 
-      //   return res.badRequest('Password must be at least 6 characters!');
-      //   }
-      //   // if (_.isUndefined(req.param('firstname'))) {
-      //   // return res.badRequest('A username is required!');
-      //   // }
-      //   if (lastname.length < 6) {
-      //   return res.badRequest('lastname must be at least 6 characters!');
-      //   }
-      //   if (!_.isString(firstname) || firstname.match(/[^a-z0-9]/i)) {
-      //   return res.badRequest('Invalid username: must consist of numbers and letters only.');
-      //   }
-        Mailer.sendWelcomeMail(user);
         res.json(200, {user: user});
+        res.json(Mailer.sendWelcomeMail(user));
     }).catch((err) => {
       res.json((err.invalidAttributes));
       
@@ -80,12 +57,12 @@ module.exports = {
   },
   destroyUser(req, res) {
     const id = req.params.id;
-    const username = req.body.usUserControllerername;
+    // const username = req.body.firstname;
     User.destroy(id).then(function (err) {
       if (err) {
         return res.negotiate(err);
       }
-      sails.log(`The user(s) named ${username} have now been deleted, if there were any.`);
+      sails.log(`The user(s) have now been deleted, if there were any.`);
       return res.ok();
     });
   },
@@ -230,59 +207,6 @@ module.exports = {
       res.badRequest(err);
       console.log(`sorry the user cannot be updated due to the errors encountered`)
     });
-
-
-    // User.findOne({
-    //   id: cookiesID
-    // }).exec(function (err, user) {
-    //   if (err) {
-    //     return res.serverError(err);
-    //   }
-    //   if (!user) {
-    //     return res.notFound('Could not find user, sorry.');
-    //   }
-
-    //   if (password==='') {
-    //     res.view('changepassword')
-    //   }
-    //   else{
-    //     bcryptjs.genSalt(10, function (err, salt) {
-    //       bcryptjs.hash(password, salt, function (err, hash) {
-    //         if (err) {
-    //           console.log(err);
-    //           cb(err);
-    //         } else {
-    //           req.body.password = hash;
-    //           console.log("this the new hashed password"+hash)
-    //           console.log("this is the password inside the user schema"+req.body.password)
-    //         }
-    //       });
-    //     });
-    //     console.log("this is the missing shit:::"+password)
-    //   }
-    //  // console.log("hey this is user"+JSON.stringify(User,null,2))
-    //   console.log(password)
-    //   // sails.log('Found "%s"', user);
-    //   return console.log('--------------------' + JSON.stringify(user.password,null,2))
-      
-    //   // User.update({ id: cookiesID },
-    //   //   {
-    //   //     password: hash
-    //   //   }
-    //   // ).then((updated) => {
-    //   //   console.log(`This is the new password ::::::${password}`)
-    //   //   console.log(`This is the new password ::::::${JSON.stringify(updated, null, 2)}`)
-    //   //   console.log("this is the changed password inside the user schema"+req.body.password)
-    //   //   // delete updated[0].validation_token;
-    //   //   res.json(updated[0])
-    //   //   console.log(':::::::' + updated[0])
-    //   //   delete cookiesID
-    //   // }).catch((err) => {
-    //   //   res.badRequest(err);
-    //   //   console.log(`sorry the user cannot be updated due to the errors encountered`)
-    //   // });
-    // });
-
   },
   view(req,res){
     var validation_tokenR = req.query.validation_id;

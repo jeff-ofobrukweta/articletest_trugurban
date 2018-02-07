@@ -6,21 +6,28 @@
  */
 
 module.exports = {
-  // tableName: 'questions',
-
-  // autoPK: false,
-
-  // autoCreatedAt: false,
-
-  // autoUpdateddAt: false,
 
 attributes: {
+  schema: true,
    data: {
       type: 'string'
     },
     video: {
       model: 'videosmodel'
-    }
+    },
+    videourl: {
+      type: 'string'
+    },
+    exercisesflow: {
+      type: 'string'
+    },
+    answer: {
+        type: 'string'
+      },
+    subquestions: {
+      collection: 'subquestions',
+      via: 'subquest'
+   }
   }
 };
 

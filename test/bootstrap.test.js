@@ -3,7 +3,6 @@
  */
  
 "use strict";
-
 var Sails = require('sails');
 var config = require('../config/env/test');
 var sails;
