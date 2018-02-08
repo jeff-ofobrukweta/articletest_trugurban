@@ -1,5 +1,5 @@
 // config/email.js
-var nodemailer = require('nodemailer');
+// var nodemailer = require('nodemailer');
 
 module.exports.email = {
   service: "Mailgun",
@@ -11,4 +11,4 @@ module.exports.email = {
   from: "oghenerukevwejeff@gmail.com",
   testMode: false,
   ssl: true
-}
+};

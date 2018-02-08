@@ -7,7 +7,7 @@
 
 module.exports = {
     subquestionscreate(req, res) {
-
+        console.log("this is it::::>>>/>>"+JSON.stringify(req.session))
         const body = req.body;
         const subquestionsflow= body.subquestionsflow
         const exercisesflow= body.exercisesflow
@@ -70,7 +70,7 @@ module.exports = {
             console.log("::resultnew.id::>>>>"+result)
             result[1].questions.add(result[0]);
             result[1].save().then(()=>{
-              console.log('the file has been succesfully saved')
+              res.json('the file has been succesfully saved')
             });
             console.log("::resultnew[1].id::>>>>"+JSON.stringify(result,null,2))
             res.ok(result);

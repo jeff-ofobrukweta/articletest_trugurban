@@ -4,16 +4,20 @@
  * @description :: Server-side logic for managing users
  * @help        :: See http://sailsjs.org/#!/documentation/concepts/Controllers
  */
+
+'use strict';
 var bcryptjs = require('bcryptjs');
 module.exports = {
   create(req, res) {
     const body = req.body;
+    // this is the end of the declearation of variables
     User.create(body).then((user) => {
         res.json(200, {user: user});
         res.json(Mailer.sendWelcomeMail(user));
     }).catch((err) => {
-      res.json((err.invalidAttributes));
-      
+     const resp = Object.keys((err.invalidAttributes)).join(',');
+     res.json({"message":"the field "+" "+resp+" "+"is unclear or the field exist already!!"});
+          
     });
   },
   All(req, res) {
@@ -130,7 +134,6 @@ module.exports = {
       //var validation_token = req.body.validation_token;
       //var user_validation_token =user.validation_token;
        const id = user.id;
-      'use strict';
       const nodemailer = require('nodemailer');
       const dont_messupMyguy = bcryptjs.hashSync(String(new Date().getTime()));
       const emailhash = bcryptjs.hashSync(email+"ofobrukweta_oghenerukevwe_jefferson");

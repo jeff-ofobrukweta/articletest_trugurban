@@ -8,7 +8,6 @@
  * @supertest 	:: https://github.com/visionmedia/supertest
  */
 "use strict";
-var sails = require('sails');
 var chai = require('chai');
 var assert = chai.assert;
 var sinon = require('sinon');
@@ -57,7 +56,7 @@ describe('Controller:User', () => {
     });
 
     //TODO: you must create the defining logic to get by id
-	var id = 81;
+	var id = '5a7b2f306a998b2616976ccb';
 
 	describe('GET /User/:id', () => {
         it('should respond with the requested User:id', done => {
@@ -86,7 +85,6 @@ describe('Controller:User', () => {
             .end((err, res) => {
                 if (err)
                     return done(err);
-
             	//TODO: validate the response expected
                 expect(res.body.code).to.equal('OK');
                 done();
