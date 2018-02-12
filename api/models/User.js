@@ -32,7 +32,7 @@ module.exports = {
       required: true
     },
     language: {
-      type: 'array',
+      type: 'string',
       required: true
     },
     password: {
