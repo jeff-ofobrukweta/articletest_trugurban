@@ -16,7 +16,7 @@ module.exports = {
         res.json(Mailer.sendWelcomeMail(user));
     }).catch((err) => {
      const resp = Object.keys((err.invalidAttributes)).join(',');
-     res.json({"message":"the field "+" "+resp+" "+"is unclear or the field exist already!!"}); 
+     res.json({"message":"the field "+" "+resp+" "+"is unclear or the field exist already!!","message2":"error"}); 
     });
   },
   All(req, res) {

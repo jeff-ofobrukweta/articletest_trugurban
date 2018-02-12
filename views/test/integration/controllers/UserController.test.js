@@ -16,8 +16,8 @@ var request = require('supertest');
 var expect =  chai.expect;
 var baseUrl = 'http://localhost:80';
 
-// console.log('SSS',global);
-// process.exit(1);
+console.log('SSS',global);
+process.exit(1);
 
 // var User = require('../../../api/models/user');
 
