@@ -31,10 +31,10 @@ module.exports = {
       type: 'string',
       required: true
     },
-    language: {
-      type: 'string',
-      required: true
-    },
+    // language: {
+    //   type: 'string',
+    //   required: true
+    // },
     password: {
       type: 'string',
       required: true,
