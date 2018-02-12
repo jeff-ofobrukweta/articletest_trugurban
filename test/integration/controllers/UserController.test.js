@@ -92,7 +92,7 @@ describe('Controller:User', () => {
         });
     });
 
-    describe('DELETE /User/:id', () => {
+    describe('DELETE /destroyUser/:id', () => {
     	it('should respond with 204 on successful removal', done => {
             request(sails.hooks.http.app)
                 .delete(baseUrl + '/User/' + data.id)

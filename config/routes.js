@@ -36,6 +36,9 @@ module.exports.routes = {
   '/': {
     view: 'homepage'
   },
+  '/pay': {
+    view: 'pay'
+  },
   '/update': {
     view: 'changepassword'
   },
@@ -63,13 +66,6 @@ module.exports.routes = {
   'POST /login': {
     controller: 'AuthControllerControllerController',
     action: 'login'
-  },
-  'DELETE /destroyUser/:id': {
-    controller: 'UserController',
-    action: 'destroyUser',
-    cors: {
-      origin: 'http://foobar.com,https://owlhoot.com'
-    }
   },
   'DELETE /destroyUser/:id': {
     controller: 'UserController',
@@ -191,7 +187,17 @@ module.exports.routes = {
   },
 
 // this section is the route configuration for updating the information on the application via the api
-  
+
+
+//this is the route for paystack payment services
+'GET /listcustomers': {
+  controller: 'Payment_servicesController',
+  action: 'listcustomers'
+},
+'POST /payingcustomers': {
+  controller: 'Payment_servicesController',
+  action: 'payingcustomers'
+},
   /***************************************************************************
   *                                                                          *
   * Custom routes here...                                                    *

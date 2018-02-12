@@ -10,7 +10,6 @@ module.exports = {
         console.log("this is it::::>>>/>>"+JSON.stringify(req.session))
         const body = req.body;
         const subquestionsflow= body.subquestionsflow
-        const exercisesflow= body.exercisesflow
         const questions= body.questions
         const videourl= body.videourl
         const language= body.language
@@ -26,7 +25,7 @@ module.exports = {
         
             return Promise.all(
                 [result.id,Subquestions.create({"subquestions":subquestions,"subquestions2":subquestions2}),
-                Questions.create({"questions":questions,"answer":answer,"videourl":videourl,"exercisesflow":exercisesflow,"subquestionsflow":subquestionsflow,"language":language}),Videosmodel.create({"level":level})
+                Questions.create({"questions":questions,"answer":answer,"videourl":videourl,"subquestionsflow":subquestionsflow,"language":language}),Videosmodel.create({"level":level})
             ]
             );
         })

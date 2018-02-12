@@ -55,10 +55,9 @@ module.exports = {
       required: false,
       unique: false
     },
-    default_Questions: {
-      type: 'string',
-      required: false,
-      unique: false
+    requiredpaystacktoken: {
+      type: 'boolean',
+      defaultTo: false
     },
     toJSON: function () {
       var obj = this.toObject();

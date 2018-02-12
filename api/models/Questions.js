@@ -18,9 +18,6 @@ attributes: {
     videourl: {
       type: 'string'
     },
-    exercisesflow: {
-      type: 'string'
-    },
     answer: {
         type: 'string'
       },

@@ -9,7 +9,7 @@ module.exports = {
         level: 'error'
     },
     models: {
-        connection: 'localDiskDb',
+        connection: 'someMongodbServer',
         migrate: 'drop'
     }
 };
