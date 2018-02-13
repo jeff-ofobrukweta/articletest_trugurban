@@ -120,6 +120,10 @@ module.exports.routes = {
     controller: 'UserController',
     action: 'view'
   },
+  'GET /Allbeginners': {
+    controller: 'NaterialschemaController',
+    action: 'Allbeginners'
+  },
   'GET /Allintermediate': {
     controller: 'NaterialschemaController',
     action: 'Allintermediate'
@@ -177,6 +181,10 @@ module.exports.routes = {
   'GET /All': {
     controller: 'UserController',
     action: 'All'
+  },
+  'GET /Allintermediatespanish': {
+    controller: 'NaterialschemaController',
+    action: 'Allintermediatespanish'
   },
   'POST /forgot_password': {
     controller: 'NodemailerController',
