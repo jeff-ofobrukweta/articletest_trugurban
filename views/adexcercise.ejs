@@ -1,0 +1,71 @@
+<html>
+    <head>
+
+    </head>
+    <body>
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+            <form id="form-login">
+                    <div class="form-group">
+                    <!--  -->
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Questions</label>
+                        <input type="text" class="form-control" id="questions" aria-describedby="emailHelp" placeholder="questions">
+                    </div>
+                    <!--  -->
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Answer</label>
+                        <input type="text" class="form-control" id="answer" aria-describedby="emailHelp" placeholder="answer">
+                    </div>
+                    <div class="form-group">
+                            <label for="exampleInputEmail1">subquestionsflow</label>
+                            <input type="text" class="form-control" id="subquestionsflow" aria-describedby="emailHelp" placeholder="subquestionsflow">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                  </form>
+                
+                  <script>
+                    $(document).ready(function () {
+                            function signupFunction(
+                            DATA = { 
+                            //   lesson_number: $('#lesson_number').val(),
+                            //   read_preview: $('#read_preview').val(),
+                            //   videourl: $('#videourl').val(),
+                            //   level: $('#level').val(),
+                              
+                              questions: $('#questions').val(),
+                              subquestionsflow: $('#subquestionsflow').val(),
+                              answer: $('#answer').val() }, URL) {
+                                var URL = "https://brents-url-olango.herokuapp.com/addOuestions";
+                                $.ajax({
+                                    url: URL,
+                                    type: "POST",
+                                    crossDomain: true,
+                                    dataType: 'jain',
+                                    processData: false,
+                                    beforeSend:  (xhr) => {
+                                        xhr.setRequestHeader("Content-Type", "application/json");
+                                        xhr.setRequestHeader("Accept", "application/json");
+                                    },
+                                    data: JSON.stringify(DATA,null,2),
+                                    success:(response)=> {
+                                        console.log('this is the response point where am trin to know'+JSON.stringify(response, null, 2));
+                                    },
+                                    error:(response)=> {
+                                        console.log(response); 
+                                    }
+                                });
+                                //this part is to log out the users already signed up in the application for developmental purposes.
+                                // $.getJSON('http://localhost:1337/' + DATA, function (json_data) {
+                                //     //this is to display all the users in the database!! dont forget to clear when about to deploy!!!!
+                                //     console.log(JSON.stringify(json_data));
+                                // });
+                                // console.log(`this is the json data sent to the api for signup action:::: ${JSON.stringify(DATA, null, 2)}`);
+                            }
+                            $('#form-login').submit(function (e) {
+                                e.preventDefault();
+                                return signupFunction();
+                            });
+                        });
+                  </script>
+        </body>
+</html>

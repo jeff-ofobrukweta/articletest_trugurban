@@ -15,6 +15,7 @@ module.exports = {
         console.log(err)
     });
     },
+    
     payingcustomers(){
         paystack.plan.create({
             name: 'API demo',

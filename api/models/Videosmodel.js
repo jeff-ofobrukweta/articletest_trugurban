@@ -9,7 +9,24 @@ module.exports = {
 
   attributes: {
     schema: true,
+    lesson_title: {
+        type: 'string'
+      },
+
+      lesson_number: {
+        type: 'string'
+      },
+      language2: {
+        type: 'string'
+      },
       level: {
+        type: 'string'
+      },
+      read_preview: {
+        type: 'string'
+      },
+
+      video_url: {
         type: 'string'
       },
       

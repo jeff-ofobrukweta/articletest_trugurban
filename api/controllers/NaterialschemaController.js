@@ -7,25 +7,30 @@
 
 module.exports = {
     subquestionscreate(req, res) {
-        console.log("this is it::::>>>/>>"+JSON.stringify(req.session))
         const body = req.body;
         const subquestionsflow= body.subquestionsflow
         const questions= body.questions
         const videourl= body.videourl
         const language= body.language
+        //for the video-model
+        const lesson_title= body.lesson_title
+        const lesson_number= body.lesson_number
+        const read_preview= body.read_preview
         const level= body.level
+        
+        //for the question-model
         const answer= body.answer
         //this is for the other attributes model
         const subquestions= body.subquestions
         const subquestions2= body.subquestions2
-        console.log("this is the user input"+body)
-        Exercises.create({ exercise: body.exercises}).then((result) => {
+        // console.log("this is the user input"+body)
+        Exercises.create({ exercises: body.exercises}).then((result) => {
             body.exercises = result.id;
 
         
             return Promise.all(
                 [result.id,Subquestions.create({"subquestions":subquestions,"subquestions2":subquestions2}),
-                Questions.create({"questions":questions,"answer":answer,"videourl":videourl,"subquestionsflow":subquestionsflow,"language":language}),Videosmodel.create({"level":level})
+                Questions.create({"questions":questions,"answer":answer,"subquestionsflow":subquestionsflow}),Videosmodel.create({"lesson_title":lesson_title,"level":level,"language":language,"lesson_number":lesson_number,"read_preview":read_preview,"videourl":videourl,})
             ]
             );
         })
@@ -95,13 +100,17 @@ module.exports = {
         const id = req.params.id;
         const questions = req.body.questions;
         const answer = req.body.answer;
-        Videosmodel.findOne(id).then((result) => {
-            const sd = Questions.create({"questions":questions,"answer":answer});
+        const language = req.body.language;
+        const subquestionsflow = req.body.subquestionsflow;
+        
+        Videosmodel.findOne(id).then((result) => { 
+            const sd = Questions.create({"questions":questions,"answer":answer,"subquestionsflow":subquestionsflow,"language":language});
             return Promise.all([sd,result]);
-        }).then((result) => {
+        }).then((result) => { 
             result[1].questions.add(result[0].id);
             result[1].save().then(()=>{});
-            
+            //this is to log out if the model is valid and not null
+            console.log(JSON.stringify(result,null,2))
             res.ok(result);
         }).catch((err) => {
             console.log(err);
@@ -125,6 +134,13 @@ module.exports = {
         Videosmodel.find(body).populate('questions').then((videos) => {
            // sails.log(videos)
             // console.log(sails.hooks.http.app);    
+            return res.json(videos);
+        })
+    },
+    //this find all intermediate videos
+    Allintermediate(req, res) {
+        const body = req.body;
+        Videosmodel.find({level:"intermediate",language:"English"}).populate('questions').then((videos) => {   
             return res.json(videos);
         })
     },

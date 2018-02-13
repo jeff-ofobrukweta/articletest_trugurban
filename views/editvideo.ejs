@@ -1,0 +1,93 @@
+<html>
+    <head>
+
+    </head>
+    <body>
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+            <form id="form-login">
+                    <div class="form-group">
+                      <label for="exampleInputEmail1">lesson title</label>
+                      <input type="text" class="form-control" id="lesson_title" aria-describedby="emailHelp" placeholder="lesson_title">
+                    </div>
+                    <!--  -->
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">lesson number</label>
+                        <input type="text" class="form-control" id="lesson_number" aria-describedby="emailHelp" placeholder="lesson_number">
+                    </div>
+                    <div class="form-group">
+                            <label for="exampleInputEmail1">language</label>
+                            <input type="text" class="form-control" id="language" aria-describedby="emailHelp" placeholder="language">
+                    </div>
+                    <!--  -->
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Questions</label>
+                        <input type="text" class="form-control" id="questions" aria-describedby="emailHelp" placeholder="questions">
+                    </div>
+                    <!--  -->
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Answer</label>
+                        <input type="text" class="form-control" id="answer" aria-describedby="emailHelp" placeholder="answer">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">videourl</label>
+                        <input type="text" class="form-control" id="videourl" aria-describedby="emailHelp" placeholder="videourl">
+                    </div>
+                    <div class="form-group">
+                            <label for="exampleInputEmail1">level</label>
+                            <input type="text" class="form-control" id="level" aria-describedby="emailHelp" placeholder="level">
+                    </div>
+                    <!--  -->
+                    <div class="form-group">
+                        <label for="comment">read preview:</label>
+                        <textarea class="form-control" rows="5" id="read_preview"></textarea>
+                    </div> 
+                    <!--  -->
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                  </form>
+                
+                  <script>
+                    $(document).ready(function () {
+                            function signupFunction(
+                            DATA = { 
+                              lesson_title: $('#lesson_title').val(),
+                              lesson_number: $('#lesson_number').val(),
+                              read_preview: $('#read_preview').val(),
+                              videourl: $('#videourl').val(),
+                              questions: $('#questions').val(),
+                              level: $('#level').val(),
+                              language: $('#language').val(),
+                              answer: $('#answer').val() }, URL) {
+                                var URL = `https://brents-url-olango.herokuapp.com/subquestionscreate`;
+                                $.ajax({
+                                    url: URL,
+                                    type: "POST",
+                                    crossDomain: true,
+                                    dataType: 'jain',
+                                    processData: false,
+                                    beforeSend:  (xhr) => {
+                                        xhr.setRequestHeader("Content-Type", "application/json");
+                                        xhr.setRequestHeader("Accept", "application/json");
+                                    },
+                                    data: JSON.stringify(DATA,null,2),
+                                    success:(response)=> {
+                                        console.log('this is the response point where am trin to know'+JSON.stringify(response, null, 2));
+                                    },
+                                    error:(response)=> {
+                                        console.log(response);
+                                    }
+                                });
+                                //this part is to log out the users already signed up in the application for developmental purposes.
+                                // $.getJSON('http://localhost:1337/' + DATA, function (json_data) {
+                                //     //this is to display all the users in the database!! dont forget to clear when about to deploy!!!!
+                                //     console.log(JSON.stringify(json_data));
+                                // });
+                                // console.log(`this is the json data sent to the api for signup action:::: ${JSON.stringify(DATA, null, 2)}`);
+                            }
+                            $('#form-login').submit(function (e) {
+                                e.preventDefault();
+                                return signupFunction();
+                            });
+                        });
+                  </script>
+        </body>
+</html>

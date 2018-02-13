@@ -39,6 +39,12 @@ module.exports.routes = {
   '/pay': {
     view: 'pay'
   },
+  '/edit': {
+    view: 'editvideo'
+  },
+  '/adexcercise': {
+    view: 'adexcercise'
+  },
   '/update': {
     view: 'changepassword'
   },
@@ -114,9 +120,9 @@ module.exports.routes = {
     controller: 'UserController',
     action: 'view'
   },
-  'GET /reset': {
-    controller: 'UserController',
-    action: 'view'
+  'GET /Allintermediate': {
+    controller: 'NaterialschemaController',
+    action: 'Allintermediate'
   },
   'GET /findintermediate': {
     controller: 'NaterialschemaController',

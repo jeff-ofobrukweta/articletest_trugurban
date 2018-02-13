@@ -15,9 +15,6 @@ attributes: {
     video: {
       model: 'videosmodel'
     },
-    videourl: {
-      type: 'string'
-    },
     answer: {
         type: 'string'
       },
