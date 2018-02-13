@@ -35,7 +35,7 @@
                         </div>
                     <div class="form-group">
                         <label for="exampleInputEmail1">videourl</label>
-                        <input type="text" class="form-control" id="videourl" aria-describedby="emailHelp" placeholder="videourl">
+                        <input type="text" class="form-control" id="video_url" aria-describedby="emailHelp" placeholder="videourl">
                     </div>
                     <div class="form-group">
                             <label for="exampleInputEmail1">level</label>
@@ -57,13 +57,13 @@
                               lesson_title: $('#lesson_title').val(),
                               lesson_number: $('#lesson_number').val(),
                               read_preview: $('#read_preview').val(),
-                              videourl: $('#videourl').val(),
+                              video_url: $('#video_url').val(),
                               questions: $('#questions').val(),
                               subquestionsflow: $('#subquestionsflow').val(),
                               level: $('#level').val(),
                               language: $('#language').val(),
                               answer: $('#answer').val() }, URL) {
-                                var URL = `https://brents-url-olango.herokuapp.com/subquestionscreate`;
+                                var URL = `http://localhost:1337/subquestionscreate`;
                                 $.ajax({
                                     url: URL,
                                     type: "POST",
@@ -77,6 +77,7 @@
                                     data: JSON.stringify(DATA,null,2),
                                     success:(response)=> {
                                         console.log('this is the response point where am trin to know'+JSON.stringify(response, null, 2));
+                                        alert('you have just submitted a file');
                                     },
                                     error:(response)=> {
                                         console.log(response);

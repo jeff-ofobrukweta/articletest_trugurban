@@ -10,7 +10,7 @@ module.exports = {
         const body = req.body;
         const subquestionsflow= body.subquestionsflow
         const questions= body.questions
-        const videourl= body.videourl
+        const video_url= body.video_url
         const language= body.language
         //for the video-model
         const lesson_title= body.lesson_title
@@ -30,7 +30,7 @@ module.exports = {
         
             return Promise.all(
                 [result.id,Subquestions.create({"subquestions":subquestions,"subquestions2":subquestions2}),
-                Questions.create({"questions":questions,"answer":answer,"subquestionsflow":subquestionsflow}),Videosmodel.create({"lesson_title":lesson_title,"level":level,"language":language,"lesson_number":lesson_number,"read_preview":read_preview,"videourl":videourl,})
+                Questions.create({"questions":questions,"answer":answer,"subquestionsflow":subquestionsflow}),Videosmodel.create({"lesson_title":lesson_title,"level":level,"language":language,"lesson_number":lesson_number,"read_preview":read_preview,"video_url":video_url,})
             ]
             );
         })
@@ -137,13 +137,23 @@ module.exports = {
             return res.json(videos);
         })
     },
-    //this find all intermediate videos
+
+
+    //this find all intermediate-english videos
     Allintermediate(req, res) {
         const body = req.body;
         Videosmodel.find({level:"intermediate",language:"English"}).populate('questions').then((videos) => {   
             return res.json(videos);
         })
     },
+    //this find all beginners-english videos
+    Allbeginners(req, res) {
+        const body = req.body;
+        Videosmodel.find({level:"beginner",language:"English"}).populate('questions').then((videos) => {   
+            return res.json(videos);
+        })
+    },
+
 
     Allquestionmodel(req, res) {
         const body = req.body;

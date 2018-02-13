@@ -25,7 +25,6 @@ module.exports = {
       read_preview: {
         type: 'string'
       },
-
       video_url: {
         type: 'string'
       },

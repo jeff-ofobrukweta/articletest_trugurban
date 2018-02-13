@@ -10,12 +10,11 @@ module.exports = {
         paystack.transaction.list({perPage: 20})
 	.then(function(body) {
 		// console.log(body);
-		console.log("this is the body-part"+JSON.stringify(body,null,2));
+		console.log("this is the body-part"+JSON.stringify(body.data.gateway_response,null,2));
 	}).catch((err)=> {
         console.log(err)
     });
     },
-    
     payingcustomers(){
         paystack.plan.create({
             name: 'API demo',
@@ -34,6 +33,16 @@ module.exports = {
         //     console.log(error);
         //     console.log(body);
         // });
+    },
+    transactioninit(){
+      paystack.transaction.initialize({
+        "reference": "12345",
+        "amount": 10000,
+        "email": "oghenerukevwejeff@gmail.com",
+        "plan": null
+      }, function(err, body) {
+        console.log(body);
+      });
     }
 };
 

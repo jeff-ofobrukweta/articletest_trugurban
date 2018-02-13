@@ -200,6 +200,10 @@ module.exports.routes = {
   controller: 'Payment_servicesController',
   action: 'listcustomers'
 },
+'GET /transactioninit': {
+  controller: 'Payment_servicesController',
+  action: 'transactioninit'
+},
 'POST /payingcustomers': {
   controller: 'Payment_servicesController',
   action: 'payingcustomers'
