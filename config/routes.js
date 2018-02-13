@@ -120,6 +120,10 @@ module.exports.routes = {
     controller: 'UserController',
     action: 'view'
   },
+  'GET /Allbeginnerspaninish': {
+    controller: 'NaterialschemaController',
+    action: 'Allbeginnerspaninish'
+  },
   'GET /Allbeginners': {
     controller: 'NaterialschemaController',
     action: 'Allbeginners'

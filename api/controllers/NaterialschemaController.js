@@ -149,10 +149,18 @@ module.exports = {
     //this find all beginners-french videos
     Allbeginners(req, res) {
         const body = req.body;
+        Videosmodel.find({level:"beginner",language:"french"}).populate('questions').then((videos) => {   
+            return res.json(videos);
+        })
+    },
+     //this find all beginners-spanish videos
+     Allbeginnerspaninish(req, res) {
+        const body = req.body;
         Videosmodel.find({level:"beginner",language:"spanish"}).populate('questions').then((videos) => {   
             return res.json(videos);
         })
     },
+    //this find all intermediate-spanish videos
     Allintermediatespanish(req, res) {
         const body = req.body;
         Videosmodel.find({level:"intermediate",language:"spanish"}).populate('questions').then((videos) => {   
