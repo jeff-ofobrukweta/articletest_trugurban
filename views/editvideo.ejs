@@ -28,6 +28,11 @@
                         <label for="exampleInputEmail1">Answer</label>
                         <input type="text" class="form-control" id="answer" aria-describedby="emailHelp" placeholder="answer">
                     </div>
+                     <!--  -->
+                     <div class="form-group">
+                            <label for="exampleInputEmail1">subquestions</label>
+                            <input type="text" class="form-control" id="subquestionsflow" aria-describedby="emailHelp" placeholder="subquestions">
+                        </div>
                     <div class="form-group">
                         <label for="exampleInputEmail1">videourl</label>
                         <input type="text" class="form-control" id="videourl" aria-describedby="emailHelp" placeholder="videourl">
@@ -54,6 +59,7 @@
                               read_preview: $('#read_preview').val(),
                               videourl: $('#videourl').val(),
                               questions: $('#questions').val(),
+                              subquestionsflow: $('#subquestionsflow').val(),
                               level: $('#level').val(),
                               language: $('#language').val(),
                               answer: $('#answer').val() }, URL) {
