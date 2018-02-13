@@ -1,31 +1,40 @@
-<form >
-        <script src="https://js.paystack.co/v1/inline.js"></script>
-        <button type="button" onclick="payWithPaystack()"> Pay </button> 
-      </form>
-       
-      <script>
-        function payWithPaystack(){
-          var handler = PaystackPop.setup({
-            key: 'pk_test_5baceb3ab5536190d32c0cb8133c62adfe7c11f3',
-            email: 'oghenerukevwejeff@gmail.com',
-            amount: 10000,
-            ref: '333111000', // generates a pseudo-unique reference. Please replace with a reference you generated. Or remove the line entirely so our API will generate one for you
-            metadata: {
-               custom_fields: [
-                  {
-                      display_name: "jeff oghenerukevwe",
-                      variable_name: "jefferson",
-                      value: "+2349096958396"
-                  }
-               ]
-            },
-            callback: function(response){
-                alert('success. transaction ref is ' + response.reference);
-            },
-            onClose: function(){
-                alert('window closed');
+
+
+
+<html>
+    <head></head>
+    <body>
+        <form >
+            <script src="https://js.paystack.co/v1/inline.js"></script>
+            <button type="button" onclick="payWithPaystack()"> Pay </button> 
+    </form>
+          
+          <script>
+            function payWithPaystack(){
+              var handler = PaystackPop.setup({
+                key: 'pk_test_5baceb3ab5536190d32c0cb8133c62adfe7c11f3',
+                email: 'oghenerukevwejeff@gmail.com',
+                amount: 50000,
+                ref: '34565434', // generates a pseudo-unique reference. Please replace with a reference you generated. Or remove the line entirely so our API will generate one for you
+                metadata: {
+                   custom_fields: [
+                      {
+                          display_name: "jeff oghenerukevwe",
+                          variable_name: "jefferson",
+                          value: "+2349096958396"
+                      }
+                   ]
+                },
+                callback: function(response){
+                    alert('success. transaction ref is ' + response.reference);
+                },
+                onClose: function(){
+                    alert('window closed');
+                }
+              });
+              handler.openIframe();
             }
-          });
-          handler.openIframe();
-        }
-      </script>
+          </script>
+    </body>
+  </html>
+  

@@ -6,25 +6,37 @@
  */
 var paystack = require('paystack')('sk_test_cfe746c8ad3887628323dafd09041f0bee704f46');
 module.exports = {
-    listcustomers(){
+    listcustomers(req,res){
         paystack.transaction.list({perPage: 20})
 	.then(function(body) {
 		// console.log(body);
-		console.log("this is the body-part"+JSON.stringify(body,null,2));
+		// console.log("this is the body-part"+JSON.stringify(body.data[0].gateway_response,null,2));
 	}).catch((err)=> {
         console.log(err)
     });
-    },
+
+  },
     payingcustomers(){
-        paystack.plan.create({
-            name: 'API demo',
-            amount: 10000,
-            interval: 'monthly'
-          })
-          .then(function(error, body) {
-            console.log(error);
-         console.log(body);
-         });
+        // paystack.plan.create({
+        //     name: 'API demo',
+        //     amount: 10000,
+        //     interval: 'monthly'
+        //   })
+        //   .then(function(error, body) {
+        //     console.log(error);
+        //  console.log(body);
+        //  });
+        // paystack.transaction.list({perPage: 20})
+        // .then(function(error, body) {
+          
+          
+        //   console.log(error.data[0]);
+        // });
+        paystack.transaction.get(1396803)
+        .then(function(error, body) {
+          console.log(error);
+          console.log(body);
+        });
 
     //this is the second part to be used which lists all custormers
         // First Option
@@ -36,11 +48,15 @@ module.exports = {
     },
     transactioninit(){
       paystack.transaction.initialize({
-        "reference": "12345",
-        "amount": 10000,
+        "reference": "Di9vX8MEk85usKEpVDtD",
+        "amount": 1000000,
         "email": "oghenerukevwejeff@gmail.com",
         "plan": null
       }, function(err, body) {
+        console.log(body);
+      });
+      
+      paystack.transaction.verify("Di9vX8MEk85usKEpVDtD", function(err, body) {
         console.log(body);
       });
     }

@@ -97,7 +97,7 @@ module.exports = {
         // });
     },
     addOuestions(req, res) {
-        const id = req.param.id;
+        const id = req.params.id;
         const questions = req.body.questions;
         const answer = req.body.answer;
         const language = req.body.language;

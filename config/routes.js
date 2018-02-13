@@ -216,7 +216,7 @@ module.exports.routes = {
   controller: 'Payment_servicesController',
   action: 'transactioninit'
 },
-'POST /payingcustomers': {
+'GET /payingcustomers': {
   controller: 'Payment_servicesController',
   action: 'payingcustomers'
 },
