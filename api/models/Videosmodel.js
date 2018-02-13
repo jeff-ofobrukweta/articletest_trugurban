@@ -16,7 +16,7 @@ module.exports = {
       lesson_number: {
         type: 'string'
       },
-      language2: {
+      language: {
         type: 'string'
       },
       level: {

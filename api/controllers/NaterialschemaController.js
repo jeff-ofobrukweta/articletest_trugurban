@@ -97,13 +97,13 @@ module.exports = {
         // });
     },
     addOuestions(req, res) {
-        const id = req.params.id;
+        const lesson_number = req.body.lesson_number;
         const questions = req.body.questions;
         const answer = req.body.answer;
         const language = req.body.language;
         const subquestionsflow = req.body.subquestionsflow;
         
-        Videosmodel.findOne(id).then((result) => { 
+        Videosmodel.findOne(lesson_number).then((result) => { 
             const sd = Questions.create({"questions":questions,"answer":answer,"subquestionsflow":subquestionsflow,"language":language});
             return Promise.all([sd,result]);
         }).then((result) => { 
@@ -139,17 +139,17 @@ module.exports = {
     },
 
 
-    //this find all intermediate-english videos
+    //this find all intermediate-french videos
     Allintermediate(req, res) {
         const body = req.body;
-        Videosmodel.find({level:"intermediate",language:"English"}).populate('questions').then((videos) => {   
+        Videosmodel.find({level:"intermediate",language:"french"}).populate('questions').then((videos) => {   
             return res.json(videos);
         })
     },
-    //this find all beginners-english videos
+    //this find all beginners-french videos
     Allbeginners(req, res) {
         const body = req.body;
-        Videosmodel.find({level:"beginner",language:"English"}).populate('questions').then((videos) => {   
+        Videosmodel.find({level:"beginner",language:"french"}).populate('questions').then((videos) => {   
             return res.json(videos);
         })
     },
