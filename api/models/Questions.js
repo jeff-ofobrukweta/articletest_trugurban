@@ -21,6 +21,9 @@ attributes: {
     answer: {
         type: 'string'
       },
+      subquestionsflow: {
+        type: 'string'
+      },
     subquestions: {
       collection: 'subquestions',
       via: 'subquest'
