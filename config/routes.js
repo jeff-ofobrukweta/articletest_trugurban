@@ -120,7 +120,7 @@ module.exports.routes = {
     controller: 'UserController',
     action: 'view'
   },
-  'GET /Allbeginnerspaninish': {
+  'GET /Allbeginners/spanish': {
     controller: 'NaterialschemaController',
     action: 'Allbeginnerspaninish'
   },
@@ -128,9 +128,9 @@ module.exports.routes = {
     controller: 'NaterialschemaController',
     action: 'Allbeginners'
   },
-  'GET /Allintermediate': {
+  'GET /Allintermediate/french': {
     controller: 'NaterialschemaController',
-    action: 'Allintermediate'
+    action: 'Allintermediatefrench'
   },
   'GET /findintermediate': {
     controller: 'NaterialschemaController',
@@ -186,7 +186,7 @@ module.exports.routes = {
     controller: 'UserController',
     action: 'All'
   },
-  'GET /Allintermediatespanish': {
+  'GET /Allintermediate/spanish': {
     controller: 'NaterialschemaController',
     action: 'Allintermediatespanish'
   },
@@ -216,10 +216,25 @@ module.exports.routes = {
   controller: 'Payment_servicesController',
   action: 'transactioninit'
 },
-'GET /payingcustomers': {
+'POST /payingcustomers': {
   controller: 'Payment_servicesController',
   action: 'payingcustomers'
 },
+'GET /createpaymentToken': {
+  controller: 'Payment_servicesController',
+  action: 'createpaymentToken'
+},
+'POST /Paymentoflanguages': {
+  controller: 'Payment_servicesController',
+  action: 'Paymentoflanguages'
+},
+'GET /ViewuserwithPayment': {
+  controller: 'Payment_servicesController',
+  action: 'ViewuserwithPayment'
+},
+
+
+
   /***************************************************************************
   *                                                                          *
   * Custom routes here...                                                    *

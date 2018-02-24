@@ -19,9 +19,9 @@ module.exports = {
      res.json({"message":"the field"+" "+resp+" "+"is unclear or the field exist already!!","message2":"error"}); 
     });
   },
-  All(req, res) {
-    const body = req.body;
-    User.find(body).then((users) => {
+  All(req, res) { 
+    // view all users and their transactions for all individual users
+      User.find().populate('languageTransactions').then((users) => {
       sails.log(users)
       // console.log(sails.hooks.http.app);    
       return res.json(users);
@@ -114,7 +114,7 @@ module.exports = {
 
   forgotpassword(req,res){
     const email = req.body.email;
-    const password = req.body.password;
+    // const password = req.body.password;
     //this check if the user input is undefined or empty
     if (password==='') {
       return res.badRequest('An email address is required!');
@@ -158,7 +158,7 @@ module.exports = {
 
         // setup email data with unicode symbols
         let mailOptions = {
-          from: '"Olango new 👻" <olango@olango.com>', // sender address
+          from: '"Olango new 👻" <noreply@olango.com>', // sender address
           to: [email,"oghenerukevwejeff@gmail.com"], // list of receivers
           subject: 'RESSET PASSWORD FOR olango ✔', // Subject line
           html: '<img src="https://image.ibb.co/dqwyUG/profile_Pics.png" alt="profile_Pics" border="0">'+'</br>'+'<div>You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n</div>' +
@@ -210,8 +210,10 @@ module.exports = {
     ).then((updated) => {
       res.json(updated[0])
     }).catch((err) => {
-      res.badRequest(err);
-      console.log(`sorry the user cannot be updated due to the errors encountered`)
+      const resp = Object.keys((err.invalidAttributes)).join(',');
+     res.json({"message":"the field"+" "+resp+" "+"is unclear or the field is empty!!","message2":"error"});
+      // res.badRequest(err);
+      // console.log(`sorry the user cannot be updated due to the errors encountered`)
     });
   },
   view(req,res){

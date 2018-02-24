@@ -31,10 +31,6 @@ module.exports = {
       type: 'string',
       required: true
     },
-    // language: {
-    //   type: 'string',
-    //   required: true
-    // },
     password: {
       type: 'string',
       required: true,
@@ -55,10 +51,11 @@ module.exports = {
       required: false,
       unique: false
     },
-    requiredpaystacktoken: {
-      type: 'boolean',
-      defaultTo: false
+    languageTransactions: {
+      collection: 'Paymentmode',
+      via: 'payment'
     },
+
     toJSON: function () {
       var obj = this.toObject();
       delete obj.password;

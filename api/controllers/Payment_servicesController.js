@@ -16,31 +16,88 @@ module.exports = {
     });
 
   },
-    payingcustomers(){
-        // paystack.plan.create({
-        //     name: 'API demo',
-        //     amount: 10000,
-        //     interval: 'monthly'
-        //   })
-        //   .then(function(error, body) {
-        //     console.log(error);
-        //  console.log(body);
-        //  });
-        // paystack.transaction.list({perPage: 20})
-        // .then(function(error, body) {
-          
-          
-        //   console.log(error.data[0]);
-        // });
-        paystack.transaction.get(1396803)
-        .then(function(error, body) {
-          console.log(error);
-          console.log(body);
-        });
+    payingcustomers(req,res){
+        const email = "oghenerukevwejeff@gmail.com",
+         Language = "yoruba",
+         Level = "Intermediate";
+        //checking if a user has paid for a language before creating a trans
+        //step1:find the user logged in
+        User.findOne({
+          email:'oghenerukevwejeff@gmail.com',
+          firstname:'jefferson'
+        }).exec(function (err, founduser){
+          if (err) {
+            return res.serverError(err);
+          }
+          if (!founduser) {
+            return res.notFound('Could not find transaction, sorry.');
+          }
+          //this part store the user session
+           req.session.founduserId = founduser;
+           //get the sessioned user id and find the correspondind id via payment in Paymode schema
+           Paymentmode.find({Language:req.session.founduserId.id}).exec(function (err, usersNamedFinn){
+            if (err) {
+              return res.serverError(err);
+            }
 
-    //this is the second part to be used which lists all custormers
-        // First Option
-        // // paystack.{resource}.{method}
+            /*here is to validate which transaction is paid for already so as to either create a new one
+             if not paid for or to send or return a message telling the user the language/level has already been paid for
+             */
+            Paymentmode.find({Level:Level,Language:Language}).exec(function (err, usersNamed){
+              if(usersNamed[0]=== undefined){
+                // generate a token 
+                const message="please use the given token for transaction"
+                const transactionRefrence = Math.floor(Math.random() * 6) + 1 + 2000 + Math.random();
+                //find the user paying through email
+                  //add the transaction schema to the User schema
+                  User.findOne({email:email}).then((result) => { 
+                    //this part checks if the sessioned user has paid
+                    console.log(JSON.stringify(result,null,2))
+                    const sd = Paymentmode.create({transactionRefrence,Language,Level});
+                    return Promise.all([sd,result]);
+                  }).then((result) => { 
+                    //  console.log("this is the part i need to check"+JSON.stringify(result,null,2))
+                    result[1].languageTransactions.add(result[0].id);
+                    result[1].save().then(()=>{});
+                    res.ok(result);
+                  }).catch((err) => {
+                    console.log(err);
+                    res.badRequest(err.invalidAttributes);
+                });
+                // this helps to verify a transactions with the generated refrence string
+
+                //11001183,  2IzXCb6q0WtrVGL
+                paystack.transaction.verify("2IzXCb6q0WtrVGL")
+                .then(function(error, body) {
+                  // console.log(error);
+                  // console.log(body);
+                  const show= Math.floor(Math.random() * 6) + 1 + 2000 + Math.random()
+              //  console.log("this is the point of reconning"+show)
+                    return Promise.all([error,show])
+                }).then((reponses)=>{
+                    console.log(reponses)
+                });
+
+
+              }
+              if(usersNamed[0] != undefined){
+                //this is to give a report that the user has paid before
+                return res.json('transaction has been made previously')
+              }
+              if (err) {
+                return res.serverError(err);
+              }
+              
+              
+            });
+            //console.log(JSON.stringify(usersNamedFinn,null,2))
+          });
+          //return res.json(req.session.founduserId.id);
+        });
+        
+    // this is the second part to be used which lists all custormers
+    //     First Option
+        // paystack.{resource}.{method}
         // paystack.customer.list(function(error, body) {
         //     console.log(error);
         //     console.log(body);
@@ -59,7 +116,32 @@ module.exports = {
       paystack.transaction.verify("Di9vX8MEk85usKEpVDtD", function(err, body) {
         console.log(body);
       });
-    }
+    },
+    createpaymentToken(req, res) {
+      //when  a user ask/demands for a token that is when the transaction-model is added to the user-schema
+      const message="please use the given token for transaction"
+      const tokenPaystack = Math.floor(Math.random() * 6) + 1 + 2000 + Math.random();
+      
+      return res.json({tokenPaystack,message})
+    },
+    Paymentoflanguages(req, res) {
+      const transactionRefrence = req.body.transactionRefrence
+      const Language = req.body.Language
+      Paymentmode.create({transactionRefrence,Language}).then((transactions) => {
+        res.json(200, {transactions});
+    }).catch((err) => {
+     const resp = Object.keys((err.invalidAttributes)).join(',');
+     res.json({"message":"the field"+" "+resp+" "+"is unclear or the field exist already!!","message2":"error"}); 
+    });
+    },
+
+    ViewuserwithPayment(req, res) {
+      User.find().populate('languageTransactions').then((videos) => {
+         // sails.log(videos)
+          // console.log(sails.hooks.http.app);    
+          return res.json(videos);
+      })
+  },
 };
 
 

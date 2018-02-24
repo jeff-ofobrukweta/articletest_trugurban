@@ -130,8 +130,7 @@ module.exports = {
         });
     },
     Allvideos(req, res) {
-        const body = req.body;
-        Videosmodel.find(body).populate('questions').then((videos) => {
+        Videosmodel.find().populate('questions').then((videos) => {
            // sails.log(videos)
             // console.log(sails.hooks.http.app);    
             return res.json(videos);
@@ -140,7 +139,7 @@ module.exports = {
 
 
     //this find all intermediate-french videos
-    Allintermediate(req, res) {
+    Allintermediatefrench(req, res) {
         const body = req.body;
         Videosmodel.find({level:"intermediate",language:"french"}).populate('questions').then((videos) => {   
             return res.json(videos);
