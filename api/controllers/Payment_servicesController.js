@@ -19,16 +19,19 @@ module.exports = {
     payingcustomers(req,res){
   const show = req.body.show
   const collect1 = req.body
-
-        const Email = "oghenerukevwejeff@gmail.com",
-         Language = "test123",
-         Level = "beginner";
-         const transactionRefrence = Math.floor(Math.random() * 6) + 1 + 2000 + Math.random();
+  console.log(">>>>email>>>>"+collect1.email)
+  console.log(">>>>firstname>>>>"+collect1.firstname)
+  // "firstname": "",
+  // "secondname": "",
+  // "language": "Yoruba",
+  // "level": "Intermediate",
+  // "email": "oghenerukevwejeff@yahoo.com",
+  // "show": 2004.2798164122983
         //checking if a user has paid for a language before creating a trans
         //step1:find the user logged in
         User.findOne({
-          email:'oghenerukevwejeff@gmail.com',
-          firstname:'jefferson'
+          email:collect1.email
+          // firstname:collect1.firstname
         }).exec(function (err, founduser){
           if (err) {
             return res.serverError(err);
@@ -47,16 +50,16 @@ module.exports = {
             /*here is to validate which transaction is paid for already so as to either create a new one
              if not paid for or to send or return a message telling the user the language/level has already been paid for
              */
-            Paymentmode.find({Level:Level,Language:Language}).exec(function (err, usersNamed){
+            Paymentmode.find({Level:collect1.level,Language:collect1.language}).exec(function (err, usersNamed){
               if(usersNamed[0]=== undefined){
                 // generate a token 
                 const message="please use the given token for transaction";
                 //find the user paying through email
                   //add the transaction schema to the User schema
-                  User.findOne({email:email}).then((result) => { 
+                  User.findOne({email:collect1.email}).then((result) => { 
                     //this part checks if the sessioned user has paid
                     console.log(JSON.stringify(result,null,2))
-                    const sd = Paymentmode.create({transactionRefrence,Language,Level});
+                    const sd = Paymentmode.create({transactionRefrence:collect1.show,Language:collect1.language,Level:collect1.level});
                     return Promise.all([sd,result]);
                   }).then((result) => { 
                     //  console.log("this is the part i need to check"+JSON.stringify(result,null,2))
@@ -70,9 +73,10 @@ module.exports = {
                 // this helps to verify a transactions with the generated refrence string
 
                 //11001183,  2IzXCb6q0WtrVGL
-                paystack.transaction.verify("3019")
+                
+                paystack.transaction.verify(collect1.show)
                 .then(function(error, body) {
-                  // console.log(error);
+                 res.json(error.data.status,null,2);
                   // console.log(body);
                   const show= Math.floor(Math.random() * 6) + 1 + 2000 + Math.random()
               //  console.log("this is the point of reconning"+show)

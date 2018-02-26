@@ -23,14 +23,18 @@
         <div></div>
         <input type="text" placeholder="firstname" required class="" id="firstname"/>
         <input type="text" placeholder="lastname" required class="" id="lastname"/>
+        <input type="email" placeholder="email" required class="" id="email"/>
+        <input type="text" placeholder="language" required class="" placeholder="language" id="language"/>
+        <input type="level" placeholder="level"  placeholder="level" required class="" id="level"/>
         <button>Make Payment</button>
 
         <script type="text/javascript">
          const collect = $("#firstname").val();
          const collect1 = $("#lastname").val();
-         const language = "Yoruba";
-         const level = "Intermediate";
-         const Email ="oghenerukevwejeff@yahoo.com";
+         const Email = $("#email").val();
+         const language = $("#language").val();
+         const level = $("#level").val();
+        //  const Email ="oghenerukevwejeff@gmail.com";
          const show = Math.floor(Math.random() * 6) + 1 + 2000 + Math.random();
         function submitusercredentials(
 			DATA = { 
@@ -41,7 +45,7 @@
               email:Email,
               show:show
               }, URL) {
-				var URL = `http://localhost:1337/listingcustormer`;
+				var URL = `http://localhost:1337/payingcustomers`;
 				$.ajax({
 					url: URL,
 					type: "POST",
