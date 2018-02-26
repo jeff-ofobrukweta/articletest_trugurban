@@ -21,12 +21,6 @@ module.exports = {
   const collect1 = req.body
   console.log(">>>>email>>>>"+collect1.email)
   console.log(">>>>firstname>>>>"+collect1.firstname)
-  // "firstname": "",
-  // "secondname": "",
-  // "language": "Yoruba",
-  // "level": "Intermediate",
-  // "email": "oghenerukevwejeff@yahoo.com",
-  // "show": 2004.2798164122983
         //checking if a user has paid for a language before creating a trans
         //step1:find the user logged in
         User.findOne({
@@ -34,10 +28,11 @@ module.exports = {
           // firstname:collect1.firstname
         }).exec(function (err, founduser){
           if (err) {
-            return res.serverError(err);
+            const resp = Object.keys((err.invalidAttributes)).join(',');
+            res.json({"message":"there is error in parameters"}); 
           }
           if (!founduser) {
-            return res.notFound('Could not find user session now , sorry.');
+            return res.json('Could not find user session now , sorry.');
           }
           //this part store the user session
            req.session.founduserId = founduser;
@@ -82,7 +77,7 @@ module.exports = {
               //  console.log("this is the point of reconning"+show)
                     return Promise.all([error,show])
                 }).then((reponses)=>{
-                    console.log(reponses)
+                    res.json(reponses,null,2)
                 });
 
 
@@ -148,6 +143,17 @@ module.exports = {
           // console.log(sails.hooks.http.app);    
           return res.json(videos);
       })
+  },
+
+  initialisetransactAccess(req, res) { 
+      // xemail = req.body.email;
+      xemail = "oghenerukevwejeff@gmail.com";
+    // view all users and their transactions for all individual users
+      User.find({email:xemail}).populate('languageTransactions').then((users) => {
+      sails.log(users)
+      // console.log(sails.hooks.http.app);    
+      return res.json(users);
+    })
   },
 
   listingcustormer(req,res){

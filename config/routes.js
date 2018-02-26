@@ -237,6 +237,10 @@ module.exports.routes = {
   controller: 'Payment_servicesController',
   action: 'ViewuserwithPayment'
 },
+'POST /initialisetransactAccess': {
+  controller: 'Payment_servicesController',
+  action: 'initialisetransactAccess'
+},
 
 
 
