@@ -128,7 +128,7 @@ module.exports = {
         return res.serverError(err);
       }
       if (!user) {
-        return res.notFound('Could not find user, sorry.');
+        return res.json('Could not find user, sorry.');
       }
 
       sails.log('Found "%s"', user);
