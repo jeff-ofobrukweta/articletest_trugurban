@@ -118,7 +118,7 @@ module.exports = {
     // const password = req.body.password;
     //this check if the user input is undefined or empty
     if (email==="") {
-      return res.badRequest('An email address is required!');
+      return res.json('An email address is required!');
       }
     //find if the user exists in the database
     User.findOne({
