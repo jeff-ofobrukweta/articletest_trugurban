@@ -147,7 +147,7 @@ module.exports = {
 
   initialisetransactAccess(req, res) { 
       // xemail = req.body.email;
-      xemail = "oghenerukevwejeff@gmail.com";
+      xemail = req.body.email;
     // view all users and their transactions for all individual users
       User.find({email:xemail}).populate('languageTransactions').then((users) => {
       sails.log(users)
