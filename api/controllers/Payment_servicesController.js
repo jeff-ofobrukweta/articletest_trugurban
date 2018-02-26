@@ -17,9 +17,13 @@ module.exports = {
 
   },
     payingcustomers(req,res){
-        const email = "oghenerukevwejeff@gmail.com",
-         Language = "yoruba",
-         Level = "Intermediate";
+  const show = req.body.show
+  const collect1 = req.body
+
+        const Email = "oghenerukevwejeff@gmail.com",
+         Language = "test123",
+         Level = "beginner";
+         const transactionRefrence = Math.floor(Math.random() * 6) + 1 + 2000 + Math.random();
         //checking if a user has paid for a language before creating a trans
         //step1:find the user logged in
         User.findOne({
@@ -30,7 +34,7 @@ module.exports = {
             return res.serverError(err);
           }
           if (!founduser) {
-            return res.notFound('Could not find transaction, sorry.');
+            return res.notFound('Could not find user session now , sorry.');
           }
           //this part store the user session
            req.session.founduserId = founduser;
@@ -46,8 +50,7 @@ module.exports = {
             Paymentmode.find({Level:Level,Language:Language}).exec(function (err, usersNamed){
               if(usersNamed[0]=== undefined){
                 // generate a token 
-                const message="please use the given token for transaction"
-                const transactionRefrence = Math.floor(Math.random() * 6) + 1 + 2000 + Math.random();
+                const message="please use the given token for transaction";
                 //find the user paying through email
                   //add the transaction schema to the User schema
                   User.findOne({email:email}).then((result) => { 
@@ -67,7 +70,7 @@ module.exports = {
                 // this helps to verify a transactions with the generated refrence string
 
                 //11001183,  2IzXCb6q0WtrVGL
-                paystack.transaction.verify("2IzXCb6q0WtrVGL")
+                paystack.transaction.verify("3019")
                 .then(function(error, body) {
                   // console.log(error);
                   // console.log(body);
@@ -113,7 +116,7 @@ module.exports = {
         console.log(body);
       });
       
-      paystack.transaction.verify("Di9vX8MEk85usKEpVDtD", function(err, body) {
+      paystack.transaction.verify("222222222", function(err, body) {
         console.log(body);
       });
     },
@@ -142,6 +145,24 @@ module.exports = {
           return res.json(videos);
       })
   },
+
+  listingcustormer(req,res){
+    var paystack = require('paystack')('sk_test_cfe746c8ad3887628323dafd09041f0bee704f46');
+  //   paystack.transaction.list()
+	// .then(function(body) {
+  // 		console.log(body);
+	// })
+	// .catch(function(error) {
+	// 	console.log(error);
+  // });
+  const collect = req.body.collect
+  const Email = req.body.email
+  const collect1 = req.body
+    console.log(">>>>>>>>>>>>>>>>this is it>>>>"+JSON.stringify(collect1,null,2))
+    paystack.transaction.verify(collect1.show, function(err, body) {
+      console.log(">>>>>>>>>>>>>>>>>>///>>>>"+JSON.stringify(body.data,null,2));
+    });
+  }
 };
 
 

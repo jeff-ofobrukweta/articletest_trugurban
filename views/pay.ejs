@@ -4,6 +4,7 @@
 <html>
     <head>
      <title>payment</title>
+     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
      <script src='https://js.paystack.co/v1/inline.js'></script> 
     </head>
     <style type="text/css">
@@ -20,27 +21,76 @@
 	</style>
     <body>
         <div></div>
+        <input type="text" placeholder="firstname" required class="" id="firstname"/>
+        <input type="text" placeholder="lastname" required class="" id="lastname"/>
         <button>Make Payment</button>
 
         <script type="text/javascript">
-		
-            function makepayment(key,language,level,email, amount, ref, callback) {
+         const collect = $("#firstname").val();
+         const collect1 = $("#lastname").val();
+         const language = "Yoruba";
+         const level = "Intermediate";
+         const Email ="oghenerukevwejeff@yahoo.com";
+         const show = Math.floor(Math.random() * 6) + 1 + 2000 + Math.random();
+        function submitusercredentials(
+			DATA = { 
+			  firstname: collect,
+              secondname:collect1,
+              language:language,
+              level:level,
+              email:Email,
+              show:show
+              }, URL) {
+				var URL = `http://localhost:1337/listingcustormer`;
+				$.ajax({
+					url: URL,
+					type: "POST",
+					crossDomain: true,
+					dataType: 'jain',
+					processData: false,
+					beforeSend:  (xhr) => {
+						xhr.setRequestHeader("Content-Type", "application/json");
+						xhr.setRequestHeader("Accept", "application/json");
+					},
+					data: JSON.stringify(DATA,null,2),
+					success:(response)=> {
+						console.log('this is the response point where am trin to know'+JSON.stringify(response, null, 2));
+					},
+					error:(response)=> {
+						console.log(response);
+					}
+				});
+				console.log(`this is the json data sent to the api for signup action:::: ${JSON.stringify(DATA, null, 2)}`);
+			}
+            
+            function makepayment(key,Language,Level,email, amount,first_name,
+            last_name, ref, callback) {
                 var handler = PaystackPop.setup({
                     key: key, // This is your public key only! 
-                    email: email || 'customer@email.com', // Customers email
+                    email: email || "oghenerukevwe@gmail.com", // Customers email
                     amount: amount || 5000000.00, // The amount charged, I like big money lol
-                    ref: ref || 7019, // Generate a random reference number and put here",
+                    ref: ref ||show, // Generate a random reference number and put here",
                     metadata: { // More custom information about the transaction
                      custom_fields: [
                         {
-                            language:'English',
-                            level:'Intermediate'
+                            Language:language,
+                            Level:level,
+                            first_name:collect,
+                            last_name:collect1,
                         }
                      ]
                     },
                     callback: callback || function(response){
-                      let div = document.getElementsByTagName("div")[0] 
-                      div.innerHTML = "This was the json response reference </br />" + response.reference;
+
+                        //make the api call here
+                    //   let div = document.getElementsByTagName("div")[0] 
+                    //   div.innerHTML = "This was the json response reference </br />" + response.reference;
+                
+                    submitusercredentials();
+                        console.log(">>>>>>>>>>>>"+collect+"  show>>>"+show)
+                        console.log(">>>>>>>>>>>>"+Email)
+                        console.log(">>>>>>>>>>>>"+collect1)
+                        console.log('transaction done')
                     },
                     onClose: function(){
                       alert('window closed');
@@ -53,6 +103,10 @@
             dom.addEventListener("click", function() {
                 makepayment("pk_test_5baceb3ab5536190d32c0cb8133c62adfe7c11f3") // edit this and input your public key .. This is mine, please pay in ony big money lol
             });
+        </script>
+        <script>
+            
+           
         </script>
     </html>
     </body>

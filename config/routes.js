@@ -186,6 +186,11 @@ module.exports.routes = {
     controller: 'UserController',
     action: 'All'
   },
+
+  'POST /listingcustormer': {
+    controller: 'Payment_servicesController',
+    action: 'listingcustormer'
+  },
   'GET /Allintermediate/spanish': {
     controller: 'NaterialschemaController',
     action: 'Allintermediatespanish'
