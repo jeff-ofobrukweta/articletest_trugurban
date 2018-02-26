@@ -16,6 +16,10 @@ module.exports = {
       type: 'string',
       required: true
     },
+    Level: {
+      type: 'string',
+      required: true
+    },
     payment: {
       model: 'User'
     },

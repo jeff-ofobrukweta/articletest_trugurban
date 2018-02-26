@@ -20,7 +20,6 @@ module.exports = {
   const show = req.body.show
   const collect1 = req.body
   console.log(">>>>email>>>>"+collect1.email)
-  console.log(">>>>firstname>>>>"+collect1.firstname)
         //checking if a user has paid for a language before creating a trans
         //step1:find the user logged in
         User.findOne({
