@@ -114,9 +114,10 @@ module.exports = {
 
   forgotpassword(req,res){
     const email = req.body.email;
+    console.log(">>>>>>>"+email)
     // const password = req.body.password;
     //this check if the user input is undefined or empty
-    if (email==='') {
+    if (email===undefined) {
       return res.badRequest('An email address is required!');
       }
     //find if the user exists in the database
