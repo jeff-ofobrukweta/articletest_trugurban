@@ -171,14 +171,14 @@ module.exports = {
         // send mail with defined transport object
         transporter.sendMail(mailOptions, (error, info) => {
           if (error) {
-            return console.log(error);
+            return res.json(error,null,2);
           }
           res.json({
             Messagesent:info.messageId,
             Messageinfo:'check your mail to confirm the sent link if not easily found refresh the browser or check your span'
           });
           // Preview only available when sending through an Ethereal account
-          // res.json({PreviewURL:nodemailer.getTestMessageUrl(info)});
+          res.json({PreviewURL:nodemailer.getTestMessageUrl(info)});
 
           // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@blurdybloop.com>
           // Preview URL: https://ethereal.email/message/WaQKMgKddxQDoou...
