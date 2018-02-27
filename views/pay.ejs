@@ -317,7 +317,6 @@
 					type: "POST",
 					crossDomain: true,
 					dataType: 'jain',
-					processData: false,
 					beforeSend:  (xhr) => {
 						xhr.setRequestHeader("Content-Type", "application/json");
 						xhr.setRequestHeader("Accept", "application/json");
@@ -348,8 +347,6 @@
                      ]
                     },
                     callback: callback || function(response){
-                        console.log("responses"+JSON.stringify(response,null,2))
-
                         //make the api call here
                     //   let div = document.getElementsByTagName("div")[0] 
                     //   div.innerHTML = "This was the json response reference </br />" + response.reference;
