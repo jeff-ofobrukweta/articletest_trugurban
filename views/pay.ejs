@@ -335,7 +335,7 @@
             
             function makepayment(key,Language,Level,email, amount,ref, callback) {
                 var handler = PaystackPop.setup({
-                    key: 'pk_live_7172777765e8e0fa2e80de871f3196a57d150323', // This is your public key only! 
+                    key: key, // This is your public key only! 
                     email: email || Email, // Customers email
                     amount: amount || 5000000.00, // The amount charged, I like big money lol
                     ref: " " ||show, // Generate a random reference number and put here",
