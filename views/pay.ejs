@@ -4,7 +4,6 @@
 <html>
     <head>
      <title>payment</title>
-     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> 
     </head>
     <style type="text/css">
         body{
@@ -274,6 +273,8 @@
 }
 	</style>
     <body>
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+            <script src='https://js.paystack.co/v1/inline.js'></script> 
         <div></div>
         <ul><code>
                 please reload to make sure transaction is well received
@@ -290,8 +291,12 @@
                 <option value="Intermediate">Intermediate</option>
                 <option value="Beginner">Beginner</option>
               </select></li>
-              <script src='https://js.paystack.co/v1/inline.js'></script>
-            <li><button onclick="makepayment()">Make Payment</button></li>
+
+              <li>
+                 <form >
+                  <button type="button" onclick="payWithPaystack()"> Pay </button> 
+            </form>
+            </li>
         </ul>
         
 
@@ -304,7 +309,7 @@
         
         //  const Email ="oghenerukevwejeff@gmail.com";
          const show = Math.floor(Math.random() * 6) + 1 + 2000 + Math.random();
-        function submitusercredentials(
+         function submitusercredentials(
 			DATA = { 
               language:language,
               level:level,
@@ -332,47 +337,32 @@
 				});
 				console.log(`this is the json data sent to the api for signup action:::: ${JSON.stringify(DATA, null, 2)}`);
 			}
-            
-            function makepayment(key,Language,Level,email, amount,ref, callback) {
-                var handler = PaystackPop.setup({
-                    key: key, // This is your public key only! 
-                    email: email || Email, // Customers email
-                    amount: amount || 5000000.00, // The amount charged, I like big money lol
-                    ref: ref ||show, // Generate a random reference number and put here",
-                    metadata: { // More custom information about the transaction
-                     custom_fields: [
-                        {
-                            language:language,
-                            level:level
-                        }
-                     ]
+         function payWithPaystack(){
+                    var handler = PaystackPop.setup({
+                    key: 'pk_test_5baceb3ab5536190d32c0cb8133c62adfe7c11f3',
+                    email: Email,
+                    amount: 10000,
+                    ref: ''+Math.floor((Math.random() * 1000000000) + 1), // generates a pseudo-unique reference. Please replace with a reference you generated. Or remove the line entirely so our API will generate one for you
+                    metadata: {
+                        custom_fields: [
+                            {
+                                language:language,
+                                level:level
+                            }
+                        ]
                     },
-                    callback: callback || function(response){
-                        console.log("responses"+JSON.stringify(response,null,2))
+                    callback: function(response){
+                        submitusercredentials();
+                        console.log(">>>>>>>>>>>>"+JSON.stringify(response,null,2))
+                        alert('success. transaction ref is ' + response.reference);
 
-                        //make the api call here
-                    //   let div = document.getElementsByTagName("div")[0] 
-                    //   div.innerHTML = "This was the json response reference </br />" + response.reference;
-                    submitusercredentials();
-                    
-                    console.log(">>>>>>>>>>>>"+JSON.stringify(response,null,2))
-                        
                     },
                     onClose: function(){
-                      alert('click ok button ');
+                        alert('window closed');
                     }
-                });
-                // Payment Request Just Fired  
-                handler.openIframe(); 
-            }
-            let dom = document.getElementsByTagName("button")[0];
-            dom.addEventListener("click", function() {
-                makepayment("pk_live_7172777765e8e0fa2e80de871f3196a57d150323") // edit this and input your public key .. This is mine, please pay in ony big money lol
-            });
-        </script>
-        <script>
-            
-           
+                    });
+                    handler.openIframe();
+                } 
         </script>
     </html>
     </body>
