@@ -4,8 +4,8 @@
 <html>
     <head>
      <title>payment</title>
-     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-     <script src='https://js.paystack.co/v1/inline.js'></script> 
+     <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+     <script src="https://js.paystack.co/v1/paystack.js"></script>
     </head>
     <style type="text/css">
         body{
@@ -303,7 +303,7 @@
 
         
         //  const Email ="oghenerukevwejeff@gmail.com";
-         const show = Math.floor(Math.random() * 6) + 1 + 2000 + Math.random();
+         const show = Math.floor((Math.random() * 1000000000) + 1);
         function submitusercredentials(
 			DATA = { 
               language:language,
@@ -317,6 +317,7 @@
 					type: "POST",
 					crossDomain: true,
 					dataType: 'jain',
+					processData: false,
 					beforeSend:  (xhr) => {
 						xhr.setRequestHeader("Content-Type", "application/json");
 						xhr.setRequestHeader("Accept", "application/json");
@@ -337,7 +338,7 @@
                     key: key, // This is your public key only! 
                     email: email || Email, // Customers email
                     amount: amount || 5000000.00, // The amount charged, I like big money lol
-                    ref: ref ||show, // Generate a random reference number and put here",
+                    ref: " " ||show, // Generate a random reference number and put here",
                     metadata: { // More custom information about the transaction
                      custom_fields: [
                         {
@@ -347,9 +348,6 @@
                      ]
                     },
                     callback: callback || function(response){
-                        //make the api call here
-                    //   let div = document.getElementsByTagName("div")[0] 
-                    //   div.innerHTML = "This was the json response reference </br />" + response.reference;
                     submitusercredentials();
                     
                     console.log(">>>>>>>>>>>>"+JSON.stringify(response,null,2))
