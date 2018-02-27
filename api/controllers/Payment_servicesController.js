@@ -16,82 +16,68 @@ module.exports = {
     });
 
   },
-    payingcustomers(req,res){
+  payingcustomers(req,res){
   const show = req.body.show
   const collect1 = req.body
-  console.log(">>>>email>>>>"+collect1.email)
+  console.log(req.body)
+        // if(show.length=0){
+        //   console.log('no show')
+        // }
         //checking if a user has paid for a language before creating a trans
         //step1:find the user logged in
         User.findOne({
           email:collect1.email
+          // show:show
           // firstname:collect1.firstname
         }).exec(function (err, founduser){
           if (err) {
             const resp = Object.keys((err.invalidAttributes)).join(',');
-            res.json({"message":"there is error in parameters"}); 
+            res.json({"message":"there is error in parameter passed in"}); 
           }
           if (!founduser) {
-            return res.json('Could not find user session now , sorry.');
+            return res.json('Could not find user session now or check the email field , sorry.');
           }
           //this part store the user session
            req.session.founduserId = founduser;
+          //  console.log("here >>>?"+JSON.stringify(req.session.founduserId,null,2))
+          //  console.log("the end of world")
            //get the sessioned user id and find the correspondind id via payment in Paymode schema
-           Paymentmode.find({Language:req.session.founduserId.id}).exec(function (err, usersNamedFinn){
-            if (err) {
-              return res.serverError(err);
+           Paymentmode.find({payment:req.session.founduserId.id,Level:collect1.level,Language:collect1.language}).exec(function (err, usersNamedFinn){
+            //check if the payment exist in the user-payment shema
+            if(Object.keys(usersNamedFinn).length>=1){
+              return res.json('transaction was already made earlier')
             }
-
-            /*here is to validate which transaction is paid for already so as to either create a new one
-             if not paid for or to send or return a message telling the user the language/level has already been paid for
-             */
-            Paymentmode.find({Level:collect1.level,Language:collect1.language}).exec(function (err, usersNamed){
-              if(usersNamed[0]=== undefined){
-                // generate a token 
-                const message="please use the given token for transaction";
-                //find the user paying through email
-                  //add the transaction schema to the User schema
-                  User.findOne({email:collect1.email}).then((result) => { 
-                    //this part checks if the sessioned user has paid
-                    console.log(JSON.stringify(result,null,2))
-                    const sd = Paymentmode.create({transactionRefrence:collect1.show,Language:collect1.language,Level:collect1.level});
-                    return Promise.all([sd,result]);
-                  }).then((result) => { 
-                    //  console.log("this is the part i need to check"+JSON.stringify(result,null,2))
-                    result[1].languageTransactions.add(result[0].id);
-                    result[1].save().then(()=>{});
-                    res.ok(result);
-                  }).catch((err) => {
-                    console.log(err);
-                    res.badRequest(err.invalidAttributes);
-                });
-                // this helps to verify a transactions with the generated refrence string
-
-                //11001183,  2IzXCb6q0WtrVGL
-                
+            //if it exists 
+            else{
+              //find the user paying through email
+                //add the transaction schema to the User schema
+                User.findOne({email:collect1.email}).then((result) => { 
+                  //this part checks if the sessioned user has paid
+                  const sd = Paymentmode.create({transactionRefrence:collect1.show,Language:collect1.language,Level:collect1.level});
+                  return Promise.all([sd,result]);
+                }).then((result) => { 
                 paystack.transaction.verify(collect1.show)
                 .then(function(error, body) {
                  res.json(error.data.status,null,2);
-                  // console.log(body);
-                  const show= Math.floor(Math.random() * 6) + 1 + 2000 + Math.random()
               //  console.log("this is the point of reconning"+show)
                     return Promise.all([error,show])
                 }).then((reponses)=>{
                     res.json(reponses,null,2)
                 });
-
-
-              }
-              if(usersNamed[0] != undefined){
-                //this is to give a report that the user has paid before
-                return res.json('transaction has been made previously')
-              }
-              if (err) {
-                return res.serverError(err);
-              }
-              
-              
-            });
-            //console.log(JSON.stringify(usersNamedFinn,null,2))
+                  //  console.log("this is the part i need to check"+JSON.stringify(result,null,2))
+                  result[1].languageTransactions.add(result[0].id);
+                  result[1].save().then(()=>{});
+                  res.json('transaction creation sucessful')
+                }).catch((err) => {
+                  const resp = Object.keys((err.invalidAttributes)).join(',');
+                  res.json({"message":"there is error in parameter passed in"}); 
+              });
+            }
+            if (err) {
+              // return res.serverError(err);
+              const resp = Object.keys((err.invalidAttributes)).join(',');
+              res.json({"message":"there is error in parameter passed in"}); 
+            }
           });
           //return res.json(req.session.founduserId.id);
         });
