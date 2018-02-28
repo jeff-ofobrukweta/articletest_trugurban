@@ -121,8 +121,13 @@ module.exports = {
   },
 
   initialisetransactAccess(req, res) { 
-      // xemail = req.body.email;
-      return console.log(JSON.stringify(req.body,null,2));
+      const email=req.body.email;
+      // view all users and their transactions for all individual users
+      User.find({email:email}).populate('languageTransactions').then((users) => {
+        sails.log(users)
+        // console.log(sails.hooks.http.app);    
+        return res.json(users);
+      })
   },
 
   listingcustormer(req,res){
