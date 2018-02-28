@@ -61,7 +61,7 @@
           <div class="col-sm-9">
             <div class="input-group">
               <div class="input-group-addon">&#x20a6;</div>
-              <input class="form-control" id="amount-in-naira" value="30000" readonly required="required" type="number"/>
+              <p class="form-control" id="amount-in-naira"  readonly required="required">30000</p>
               <div class="input-group-addon">.00</div>
             </div>
           </div>
@@ -81,7 +81,7 @@
   <script>
     // change this to your public key so you 
     // will no more be prompted
-    var public_key = 'pk_live_7172777765e8e0fa2e80de871f3196a57d150323 ';
+    var public_key = 'pk_test_5baceb3ab5536190d32c0cb8133c62adfe7c11f3';
     
     /*
      * Start up
@@ -183,7 +183,7 @@
       amountinkobo = getParams().amountinkobo;
       
       if(!amountinkobo){
-        amountinkobo = 100 * +parseInt(document.getElementById('amount-in-naira').value);
+        amountinkobo = 100 * +30000;
       }
       
       if(!simpleValidInt(amountinkobo)){

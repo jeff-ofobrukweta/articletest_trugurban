@@ -4,7 +4,7 @@
  * @description :: Server-side logic for managing payment_services
  * @help        :: See http://sailsjs.org/#!/documentation/concepts/Controllers
  */
-var paystack = require('paystack')('sk_live_ce43805c577ecf01e6ee5c3f88056ff6eff1af23');
+var paystack = require('paystack')('sk_test_cfe746c8ad3887628323dafd09041f0bee704f46');
 module.exports = {
     listcustomers(req,res){
         paystack.transaction.list({perPage: 20})
@@ -131,9 +131,9 @@ module.exports = {
   },
 
   listingcustormer(req,res){
-    var paystack = require('paystack')('sk_live_ce43805c577ecf01e6ee5c3f88056ff6eff1af23');
+    var paystack = require('paystack')('sk_test_cfe746c8ad3887628323dafd09041f0bee704f46');
   
-    paystack.transaction.verify("0.10456686412309335", function(err, body) {
+    paystack.transaction.verify("0.9243191383796863", function(err, body) {
       console.log(">>>>>>>>>>>>>>>>>>///>>>>"+JSON.stringify(body.data,null,2));
     });
   }
