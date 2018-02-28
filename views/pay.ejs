@@ -244,7 +244,7 @@
           console.log("level"+level +">>"+JSON.stringify( email,null,2) );
           console.log("ref_no"+show);
 
-          $.post("http://localhost:1337/payingcustomers",
+          $.post("https://brents-url-olango.herokuapp.com/payingcustomers",
         {
           level: $( "#lastname option:selected" ).text(),
           language: $( "#firstname option:selected" ).text(),
