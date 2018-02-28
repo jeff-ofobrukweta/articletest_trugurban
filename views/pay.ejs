@@ -11,22 +11,33 @@
 <body onload="startUp()">
   <div class="container">
     <div class="jumbotron">
-      <h1 class="display-3">Paystack inline sample</h1>
+      <h1 class="display-3">Olango</h1>
       <form class="form" id="pay-form">
         <div id="alert-holder"></div>
         <div class="text-center">
           <p>Please provide your details and click "Pay" to make your payment.</p>
         </div>
         <fieldset class="form-group row">
-          <label class="col-sm-3" for="firstname">First Name</label>
+          <label class="col-sm-3" for="firstname">Language Name</label>
           <div class=" col-sm-9">
-            <input class="form-control" id="firstname" type="text" placeholder="Your First name (optional)" />
+            <!-- <input class="form-control" id="firstname" type="text" placeholder="Your First name (optional)" /> -->
+            <select id="firstname">
+                    <option value="Yoruba">Yoruba</option>
+                    <option value="French">French</option>
+                    <option value="English">English</option>
+                    <option value="Spanish">Spanish</option>
+                    <option value="British">British</option>
+         </select>
           </div>
         </fieldset>
         <fieldset class="form-group row">
           <label class="col-sm-3" for="lastname">Last Name</label>
           <div class=" col-sm-9">
-            <input class="form-control" id="lastname" type="text" placeholder="Your Last name (optional)" />
+            <!-- <input class="form-control" id="lastname" type="text" placeholder="Your Last name (optional)" /> -->
+            <select id="lastname">
+                    <option value="Intermediate">Intermediate</option>
+                    <option value="Beginner">Beginner</option>
+         </select>
           </div>
         </fieldset>
         <fieldset class="form-group row">
@@ -57,6 +68,7 @@
       </form>
     </div>
   </div>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://js.paystack.co/v1/inline.js"></script>
   <script>
     // change this to your public key so you 
@@ -104,7 +116,7 @@
      * Validate before opening Paystack popup
      */
     function validateAndPay(){
-      var email = document.getElementById('email').value;
+      var email = $( "#email" ).val();
       if(!simpleValidEmail(email)){
         alert("Please provide a valid email");
         return;
@@ -119,10 +131,10 @@
       }
       
       // We are not validating firstname and lastname
-      var firstname = document.getElementById('firstname').value;
-      var lastname  = document.getElementById('lastname').value;
+      var language=$( "#firstname option:selected" ).text();
+	  var level= $( "#lastname option:selected" ).text();
       
-      payWithPaystack(email, amountinkobo, firstname, lastname);
+      payWithPaystack(email, amountinkobo, language, level);
     }
   
     /* Get the query parameters for this window
@@ -178,18 +190,18 @@
      * gotten from http://stackoverflow.com/a/2117523/671568
      * replaced UUID with REF
      */
-    function generateREF(){
-      var d = new Date().getTime();
-      if(window.performance && typeof window.performance.now === "function"){
-        d += performance.now(); //use high-precision timer if available
-      }
-      var ref = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-        var r = (d + Math.random()*16)%16 | 0;
-        d = Math.floor(d/16);
-        return (c=='x' ? r : (r&0x3|0x8)).toString(16);
-      });
-      return ref;
-    }
+    // function generateREF(){
+    //   var d = new Date().getTime();
+    //   if(window.performance && typeof window.performance.now === "function"){
+    //     d += performance.now(); //use high-precision timer if available
+    //   }
+    //   var ref = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+    //     var r = (d + Math.random()*16)%16 | 0;
+    //     d = Math.floor(d/16);
+    //     return (c=='x' ? r : (r&0x3|0x8)).toString(16);
+    //   });
+    //   return ref;
+    // }
     
     /* Validate integer
      *
@@ -216,17 +228,37 @@
      * 
      * source: https://developers.paystack.co/docs/paystack-inline
      */
-    function payWithPaystack(validatedemail, amountinkobo, firstname, lastname){
+    const show = Math.random();
+    function payWithPaystack(email, amountinkobo, language, level){
       var handler = PaystackPop.setup({
         key:       public_key,
-        email:     validatedemail,
-        firstname: firstname,
-        lastname:  lastname,
+        email:     email,
+        language: language,
+        level:     level,
         amount:    amountinkobo,
-        ref:       generateREF(), // This uses a random transaction reference based 
+        ref:  show, // This uses a random transaction reference based 
                                   // on the time the "Pay" button was clicked.
         callback:  function(response){
           // payment was received
+          console.log("language"+language);
+          console.log("level"+level +">>"+JSON.stringify( email,null,2) );
+          console.log("ref_no"+show);
+
+          $.post("http://localhost:1337/payingcustomers",
+        {
+          level: $( "#lastname option:selected" ).text(),
+          language: $( "#firstname option:selected" ).text(),
+          show: show,
+          email: $( "#email" ).val()
+        },
+         function(data, status){
+          var msg1 = 'Response.  <b>"' + data + '"</b>';
+          document.getElementById('alert-holder').innerHTML = '<div class="alert alert-success">' + msg1 + '</div>';
+          document.getElementById("pay-form").reset();
+        console.log("Data: " + JSON.stringify(data,null,2) + "\nStatus: " + status);
+         });
+
+          console.log(">>>>signpart");
           // clear away the form, show success message
           var msg = 'Success. The transaction reference is <b>"' + response.trxref + '"</b>';
           document.getElementById('alert-holder').innerHTML = '<div class="alert alert-success">' + msg + '</div>';
@@ -240,6 +272,38 @@
       });
       handler.openIframe();
     }
+
+    // function signupFunction(
+		// 	     DATA = { 
+    //           language:$( "#firstname option:selected" ).text(),
+		// 	        level: $( "#lastname option:selected" ).text(),
+    //           email: $( "#email" ).val(),
+    //           show:ref
+    //          }, URL) {
+		// 		var URL = `http://localhost:1337/payingcustomers`;
+		// 		$.ajax({
+		// 			url: URL,
+		// 			type: "POST",
+		// 			crossDomain: true,
+		// 			dataType: 'jain',
+		// 			processData: false,
+		// 			beforeSend:  (xhr) => {
+		// 				xhr.setRequestHeader("Content-Type", "application/json");
+		// 				xhr.setRequestHeader("Accept", "application/json");
+		// 			},
+		// 			data: JSON.stringify(DATA,null,2),
+		// 			success:(response)=> {
+		// 				console.log('this is the response point where am trin to know'+JSON.stringify(response, null, 2));
+		// 			},
+		// 			error:(response)=> {
+		// 				console.log(response);
+		// 			}
+		// 		});
+    //             //this part is to log out the users already signed up in the application for developmental purposes.
+		// 		}
+
+
+
   </script>
 </body>
 </html>

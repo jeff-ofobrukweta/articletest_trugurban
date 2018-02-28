@@ -19,7 +19,7 @@ module.exports = {
   payingcustomers(req,res){
   const show = req.body.show
   const collect1 = req.body
-  console.log(req.body)
+  console.log(">>>>>//>>>"+req.body)
         // if(show.length=0){
         //   console.log('no show')
         // }
@@ -132,29 +132,13 @@ module.exports = {
 
   initialisetransactAccess(req, res) { 
       // xemail = req.body.email;
-      xemail = req.body.email;
-    // view all users and their transactions for all individual users
-      User.find({email:xemail}).populate('languageTransactions').then((users) => {
-      sails.log(users)
-      // console.log(sails.hooks.http.app);    
-      return res.json(users);
-    })
+      return console.log(JSON.stringify(req.body,null,2));
   },
 
   listingcustormer(req,res){
     var paystack = require('paystack')('sk_test_cfe746c8ad3887628323dafd09041f0bee704f46');
-  //   paystack.transaction.list()
-	// .then(function(body) {
-  // 		console.log(body);
-	// })
-	// .catch(function(error) {
-	// 	console.log(error);
-  // });
-  const collect = req.body.collect
-  const Email = req.body.email
-  const collect1 = req.body
-    console.log(">>>>>>>>>>>>>>>>this is it>>>>"+JSON.stringify(collect1,null,2))
-    paystack.transaction.verify(collect1.show, function(err, body) {
+  
+    paystack.transaction.verify("0.9270310343010343", function(err, body) {
       console.log(">>>>>>>>>>>>>>>>>>///>>>>"+JSON.stringify(body.data,null,2));
     });
   }
