@@ -27,8 +27,6 @@ module.exports = {
         //step1:find the user logged in
         User.findOne({
           email:collect1.email
-          // show:show
-          // firstname:collect1.firstname
         }).exec(function (err, founduser){
           if (err) {
             const resp = Object.keys((err.invalidAttributes)).join(',');
@@ -81,14 +79,6 @@ module.exports = {
           });
           //return res.json(req.session.founduserId.id);
         });
-        
-    // this is the second part to be used which lists all custormers
-    //     First Option
-        // paystack.{resource}.{method}
-        // paystack.customer.list(function(error, body) {
-        //     console.log(error);
-        //     console.log(body);
-        // });
     },
     transactioninit(){
       paystack.transaction.initialize({
