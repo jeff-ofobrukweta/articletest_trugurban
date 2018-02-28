@@ -13,7 +13,7 @@ module.exports = {
     // this is the end of the declearation of variables
     User.create(body).then((user) => {
         res.json(200, {user: user});
-        res.json(Mailer.sendWelcomeMail(user));
+        Mailer.sendWelcomeMail(user);
     }).catch((err) => {
      const resp = Object.keys((err.invalidAttributes)).join(',');
      res.json({"message":"the field"+" "+resp+" "+"is unclear or the field exist already!!","message2":"error"}); 
