@@ -22,7 +22,7 @@
         <div id="alert-holder"></div>
         <div class="text-center">
           <p>Please provide your details and click "Pay" to make your payment.<br>
-            <code><b>For a Level and Language eg:Yoruba/Intermediate costs 30000 naira only</b></code></p>
+            <code><b>For a Level and Language eg:Yoruba/Intermediate costs 60000 naira only</b></code></p>
         </div>
         <fieldset class="form-group row">
           <label class="col-sm-3" for="firstname">Language Name</label>
@@ -240,9 +240,9 @@
         ref:  show, // This uses a random transaction reference based 
                                   // on the time the "Pay" button was clicked.
         callback:  function(response){
-          $.get("http://localhost:1337/All", function(data, status){
-        alert("Data: " + JSON.stringify(data,null,2) + "\nStatus: " + status);
-    });
+    //       $.get("http://localhost:1337/All", function(data, status){
+    //     alert("Data: " + JSON.stringify(data,null,2) + "\nStatus: " + status);
+    // });
 
     $.post("https://brents-url-olango.herokuapp.com/payingcustomers",
     {
