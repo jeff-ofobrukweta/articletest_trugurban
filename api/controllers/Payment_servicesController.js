@@ -131,9 +131,9 @@ module.exports = {
   },
 
   listingcustormer(req,res){
-    var paystack = require('paystack')('sk_test_cfe746c8ad3887628323dafd09041f0bee704f46');
+    var paystack = require('paystack')('sk_live_ce43805c577ecf01e6ee5c3f88056ff6eff1af23');
   
-    paystack.transaction.verify("0.9270310343010343", function(err, body) {
+    paystack.transaction.verify("0.10456686412309335", function(err, body) {
       console.log(">>>>>>>>>>>>>>>>>>///>>>>"+JSON.stringify(body.data,null,2));
     });
   }
