@@ -9,7 +9,7 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha/css/bootstrap.css" rel="stylesheet" />
   <style>
     .jumbotron{
-      margin-top:60px;
+      margin-top:5px;
       background: #b8b8b8;
     }
   </style>
@@ -39,13 +39,8 @@
           </div>
         </fieldset>
         <fieldset class="form-group row">
-          <label class="col-sm-3" for="lastname">Last Name</label>
           <div class=" col-sm-9">
             <!-- <input class="form-control" id="lastname" type="text" placeholder="Your Last name (optional)" /> -->
-            <select id="lastname">
-                    <option value="Intermediate">Intermediate</option>
-                    <option value="Beginner">Beginner</option>
-         </select>
           </div>
         </fieldset>
         <fieldset class="form-group row">
@@ -61,7 +56,7 @@
           <div class="col-sm-9">
             <div class="input-group">
               <div class="input-group-addon">&#x20a6;</div>
-              <p class="form-control" id="amount-in-naira"  readonly required="required">30000</p>
+              <p class="form-control" id="amount-in-naira"  readonly required="required">60000</p>
               <div class="input-group-addon">.00</div>
             </div>
           </div>
@@ -81,7 +76,7 @@
   <script>
     // change this to your public key so you 
     // will no more be prompted
-    var public_key = 'pk_test_5baceb3ab5536190d32c0cb8133c62adfe7c11f3';
+    var public_key = 'pk_live_7172777765e8e0fa2e80de871f3196a57d150323';
     
     /*
      * Start up
@@ -140,9 +135,8 @@
       
       // We are not validating firstname and lastname
       var language=$( "#firstname option:selected" ).text();
-	  var level= $( "#lastname option:selected" ).text();
       
-      payWithPaystack(email, amountinkobo, language, level);
+      payWithPaystack(email, amountinkobo, language);
     }
   
     /* Get the query parameters for this window
@@ -183,7 +177,7 @@
       amountinkobo = getParams().amountinkobo;
       
       if(!amountinkobo){
-        amountinkobo = 100 * +30000;
+        amountinkobo = 100 * +60000;
       }
       
       if(!simpleValidInt(amountinkobo)){
@@ -237,37 +231,30 @@
      * source: https://developers.paystack.co/docs/paystack-inline
      */
     const show = Math.random();
-    function payWithPaystack(email, amountinkobo, language, level){
+    function payWithPaystack(email, amountinkobo, language){
       var handler = PaystackPop.setup({
         key:       public_key,
         email:     email,
         language: language,
-        level:     level,
-        amount:    30000,
+        amount:    getAmountInKobo(),
         ref:  show, // This uses a random transaction reference based 
                                   // on the time the "Pay" button was clicked.
         callback:  function(response){
-          // payment was received
-          console.log("language"+language);
-          console.log("level"+level +">>"+JSON.stringify( email,null,2) );
-          console.log("ammount"+amountinkobo);
+          $.get("http://localhost:1337/All", function(data, status){
+        alert("Data: " + JSON.stringify(data,null,2) + "\nStatus: " + status);
+    });
 
-          $.post("https://brents-url-olango.herokuapp.com/payingcustomers",
-        {
-          level: $( "#lastname option:selected" ).text(),
-          language: $( "#firstname option:selected" ).text(),
-          show: show,
-          email: $( "#email" ).val()
-        },
-         function(data, status){
-          var msg1 = 'Response.  <b>"' + data + '"</b>';
-          document.getElementById('alert-holder').innerHTML = '<div class="alert alert-success">' + msg1 + '</div>';
-          document.getElementById("pay-form").reset();
-        console.log("Data: " + JSON.stringify(data,null,2) + "\nStatus: " + status);
-         });
-
-          console.log(">>>>signpart");
-          // clear away the form, show success message
+    $.post("https://brents-url-olango.herokuapp.com/payingcustomers",
+    {
+      language: language,
+      show: show,
+      email:email
+    },
+    function(data, status){
+      var msg1 = 'Response.  <b>"' + JSON.stringify(data,null,2) + '"</b>';
+      document.getElementById('alert-holder').innerHTML = '<div class="alert alert-success">' + msg1 + '</div>';
+      document.getElementById("pay-form").reset();
+    });
           var msg = 'Success. The transaction reference is <b>"' + response.trxref + '"</b>';
           document.getElementById('alert-holder').innerHTML = '<div class="alert alert-success">' + msg + '</div>';
           document.getElementById("pay-form").reset();

@@ -9,14 +9,10 @@ module.exports = {
 
   attributes: {
     transactionRefrence: {
-      type: 'string',
+      type: 'integer',
       required: true
     },
     Language: {
-      type: 'string',
-      required: true
-    },
-    Level: {
       type: 'string',
       required: true
     },

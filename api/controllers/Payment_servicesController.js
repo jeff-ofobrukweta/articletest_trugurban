@@ -4,7 +4,7 @@
  * @description :: Server-side logic for managing payment_services
  * @help        :: See http://sailsjs.org/#!/documentation/concepts/Controllers
  */
-var paystack = require('paystack')('sk_test_cfe746c8ad3887628323dafd09041f0bee704f46');
+var paystack = require('paystack')('sk_live_ce43805c577ecf01e6ee5c3f88056ff6eff1af23');
 module.exports = {
     listcustomers(req,res){
         paystack.transaction.list({perPage: 20})
@@ -40,7 +40,7 @@ module.exports = {
           //  console.log("here >>>?"+JSON.stringify(req.session.founduserId,null,2))
           //  console.log("the end of world")
            //get the sessioned user id and find the correspondind id via payment in Paymode schema
-           Paymentmode.find({payment:req.session.founduserId.id,Level:collect1.level,Language:collect1.language}).exec(function (err, usersNamedFinn){
+           Paymentmode.find({payment:req.session.founduserId.id,Language:req.body.language}).exec(function (err, usersNamedFinn){
             //check if the payment exist in the user-payment shema
             if(Object.keys(usersNamedFinn).length>=1){
               return res.json('transaction was already made earlier')
@@ -51,7 +51,7 @@ module.exports = {
                 //add the transaction schema to the User schema
                 User.findOne({email:collect1.email}).then((result) => { 
                   //this part checks if the sessioned user has paid
-                  const sd = Paymentmode.create({transactionRefrence:collect1.show,Language:collect1.language,Level:collect1.level});
+                  const sd = Paymentmode.create({transactionRefrence:collect1.show,Language:collect1.language});
                   return Promise.all([sd,result]);
                 }).then((result) => { 
                 paystack.transaction.verify(collect1.show)
