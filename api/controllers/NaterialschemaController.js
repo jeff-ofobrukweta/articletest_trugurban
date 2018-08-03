@@ -109,7 +109,7 @@ module.exports = {
         }).then((result) => { 
             result[1].questions.add(result[0].id);
             result[1].save().then(()=>{});
-            //this is to log out if the model is valid and not null
+            //this is to clog out if the model is valid and not null
             console.log(JSON.stringify(result,null,2))
             res.ok(result);
         }).catch((err) => {

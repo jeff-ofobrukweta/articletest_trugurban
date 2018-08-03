@@ -77,7 +77,7 @@ module.exports = {
               res.json({"message":"there is error in parameter passed in"}); 
             }
           });
-          //return res.json(req.session.founduserId.id);
+          return res.json(founduser);
         });
     },
     transactioninit(){

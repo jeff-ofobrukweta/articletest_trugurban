@@ -240,10 +240,6 @@
         ref:  show, // This uses a random transaction reference based 
                                   // on the time the "Pay" button was clicked.
         callback:  function(response){
-    //       $.get("http://localhost:1337/All", function(data, status){
-    //     alert("Data: " + JSON.stringify(data,null,2) + "\nStatus: " + status);
-    // });
-
     $.post("https://brents-url-olango.herokuapp.com/payingcustomers",
     {
       language: language,

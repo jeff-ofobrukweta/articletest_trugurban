@@ -1,6 +1,0 @@
-./test/bootstrap.test.js
-./test/**/*.test.js
---reporter spec
---recursive
---full-trace
---timeout 20000

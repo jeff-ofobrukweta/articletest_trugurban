@@ -1,9 +1,10 @@
 /**
- * User.js
+ * Test.js
  *
- * @description :: TODO: You might write a short summary of how this model works and what it represents here.
- * @docs        :: http://sailsjs.org/documentation/concepts/models-and-orm/models
+ * @description :: A model definition.  Represents a database table/collection/etc.
+ * @docs        :: https://sailsjs.com/docs/concepts/models-and-orm/models
  */
+
 var os = require('os'); 
 os.tmpDir = os.tmpdir;
 var bcryptjs = require('bcryptjs');
@@ -13,7 +14,7 @@ var bcryptjs = require('bcryptjs');
 module.exports = {
   schema: true,
   attributes: {
-    email: {
+    firstname: {
       type: 'string',
       required: true,
       unique: true
@@ -22,42 +23,28 @@ module.exports = {
       type: 'string',
       required: true
     },
-    firstname: {
+    middlename: {
       type: 'string',
-      required: true,
+      required: false,
       unique: true
+    },
+    email: {
+      type: 'string',
+      required: true
     },
     sex: {
       type: 'string',
       required: true
+    },
+    age: {
+      type: 'string',
+      required: true,
     },
     password: {
       type: 'string',
       required: true,
       minLength: 6,
       unique: true
-    },
-    email_validated: {
-      type: 'boolean',
-      required: false
-    },
-    validation_token: {
-      type: 'string',
-      required: false,
-      unique: true
-    },
-    middlename: {
-      type: 'string',
-      required: false,
-      unique: true
-    },
-    sex: {
-      type: 'string',
-      required: false
-    },
-    age: {
-      type: 'string',
-      required: false,
     },
     maritalstatus: {
       type: 'string',
@@ -67,15 +54,6 @@ module.exports = {
       type: 'string',
       required: false,
       unique: true
-    },
-    download_url: {
-      type: 'string',
-      required: false,
-      unique: false
-    },
-    languageTransactions: {
-      collection: 'Paymentmode',
-      via: 'payment'
     },
 
     toJSON: function () {

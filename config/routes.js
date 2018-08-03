@@ -171,9 +171,9 @@ module.exports.routes = {
     'POST /findonethroughEmail': {
       controller: 'UserController',
       action: 'findonethroughEmail',
-      cors: {
-        origin: 'http://foobar.com,https://owlhoot.com'
-      }
+      // cors: {
+      //   origin: 'http://foobar.com,https://owlhoot.com'
+      // }
     },
     'GET /Allvideos': {
         controller: 'NaterialschemaController',
@@ -185,6 +185,28 @@ module.exports.routes = {
   'GET /All': {
     controller: 'UserController',
     action: 'All'
+  },
+  'POST /testcreate': {
+    controller: 'UsertestController',
+    action: 'testcreate',
+    cors: {
+      origin: '*'
+    }
+  },
+  'POST /testlogin': {
+    controller: 'UsertestController',
+    action: 'testlogin',
+    cors: {
+      origin: '*'
+    }
+  },
+  'GET /testlogout': {
+    controller: 'UsertestController',
+    action: 'testlogout'
+  },
+  'GET /testall': {
+    controller: 'UsertestController',
+    action: 'testall'
   },
 
   'POST /listingcustormer': {
@@ -241,7 +263,10 @@ module.exports.routes = {
   controller: 'Payment_servicesController',
   action: 'initialisetransactAccess'
 },
-
+'GET /singleUser/:id': {
+  controller: 'UserController',
+  action: 'singleUser'
+},
 
 
   /***************************************************************************

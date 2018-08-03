@@ -7,6 +7,7 @@
 
 'use strict';
 var bcryptjs = require('bcryptjs');
+var greeting = require('./inheritance/classes'); 
 module.exports = {
   create(req, res) {
     const body = req.body;
@@ -22,7 +23,7 @@ module.exports = {
   All(req, res) { 
     // view all users and their transactions for all individual users
       User.find().populate('languageTransactions').then((users) => {
-      sails.log(users)
+     sails.log(users)
       // console.log(sails.hooks.http.app);    
       return res.json(users);
     })
@@ -39,17 +40,20 @@ module.exports = {
     });
   },
   findonethroughEmail(req, res) {
-    var firstname = req.body.firstname;
-    var email = req.body.email;
+    greeting.sayHello();
+    greeting.sayHellospanish();
+    // let firstname = req.body.firstname;
+    let email = req.body.email;
+    // console.log(firstname);
+    console.log(email);
     User.findOne({
       or: [
-        { firstname: firstname },
         { email: email }
       ]
-    }).exec(function (err, user) {
+    }).exec((err, user)=> {
       console.log(user);
-      res.json(user)
-      if (err) {
+      res.json(user);
+      if (err) {   
         return res.json({ err });
       } else if (!user) {
         var err = new Error('User not found.');

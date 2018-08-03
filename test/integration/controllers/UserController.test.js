@@ -17,12 +17,19 @@ var baseUrl = 'http://localhost:1337';
 // var User = require('../../../api/models/user');
 
 //TODO: you must create the defining test
-var data = {};
+var data = {
+    "firstname": "lola3367@gmail.com",
+    "lastname": "lola3367@gmail.com",
+    "email": "lola3367@gmail.com",
+    "sex": "female"
+};
+
+
 describe('Controller:User', () => { 
-	describe('POST /User', () => {
+	describe('POST /create', () => {
         it('Should creat new User', done => {
             request(sails.hooks.http.app)
-            .post(baseUrl + '/user')
+            .post(baseUrl + '/create')
             .send(data)
             .expect(201)
             .expect('Content-Type', /json/)
@@ -56,12 +63,12 @@ describe('Controller:User', () => {
     });
 
     //TODO: you must create the defining logic to get by id
-	var id = '5a7b2f306a998b2616976ccb';
+	var id = '5b1fd77a9d809de91ca936e5';
 
-	describe('GET /User/:id', () => {
+	describe('GET /singleUser/:id', () => {
         it('should respond with the requested User:id', done => {
             request(sails.hooks.http.app)
-            .get(baseUrl + '/User/' + data.id)
+            .get(baseUrl + '/singleUser/' + id)
             .expect(200)
             .expect('Content-Type', /json/)
             .end((err, res) => {
